@@ -8,13 +8,8 @@
   <logo>http://</logo>
 
   <depend package="bundles/rock" />
-  <!--
-   To add any dependencies use the depend tag
-  <depend package="dummy-dependency-0" />
-	...
-  <depend package="dummy-dependency-n-1" />
-  <depend package="dummy-dependency-n" />
-  -->
+  <depend package="bundles/rover" />
+
   <depend package="drivers/pcan_pcie_mini" />
   <depend package="drivers/platform_driver_pcan" />
   <depend package="drivers/orogen/platform_driver_pcan" />
