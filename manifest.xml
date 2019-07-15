@@ -10,7 +10,6 @@
   <depend package="bundles/rock" />
   <depend package="bundles/rover" />
 
-  <depend package="drivers/pcan_pcie_mini" />
   <depend package="drivers/platform_driver_pcan" />
   <depend package="drivers/orogen/platform_driver_pcan" />
 </package>
