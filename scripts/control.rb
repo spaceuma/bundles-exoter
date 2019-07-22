@@ -41,7 +41,7 @@ Orocos::Process.run 'control' do
     command_joint_dispatcher.configure
 
     platform_driver = Orocos.name_service.get 'platform_driver_exoter'
-    Orocos.conf.apply(platform_driver, ['default'], :override => true)
+    Orocos.conf.apply(platform_driver, ['arm'], :override => true)
     platform_driver.configure
 
     read_joint_dispatcher = Orocos.name_service.get 'read_joint_dispatcher'
