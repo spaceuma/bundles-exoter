@@ -1,0 +1,19 @@
+--- name:default
+
+scriptFile: 'Coupled_motion_planner'
+pathVariable: 'finalRoverPath'
+headingVariable: 'finalRoverHeading'
+jointsVariable: 'finalJoints'
+assignmentVariable: 'assignment'
+numJoints: 5
+
+
+xm: 1.5
+ym: 1.2
+xr: 1.08
+yr: 5.28
+initHeading: 0
+mapDirectory: '/home/marta/rock/bundles/exoter/data/maps/prl/'
+resolution: 0.02
+size: 8.91
+
