@@ -34,8 +34,8 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
     Orocos.conf.apply(command_joint_dispatcher, ['exoter_commanding'], :override => true)
     command_joint_dispatcher.configure
 
-    platform_driver = Orocos.name_service.get 'platform_driver'
-    Orocos.conf.apply(platform_driver, ['exoter'], :override => true)
+    platform_driver = Orocos.name_service.get 'platform_driver_exoter'
+    Orocos.conf.apply(platform_driver, ['arm'], :override => true)
     platform_driver.configure
 
     read_joint_dispatcher = Orocos.name_service.get 'read_joint_dispatcher'
@@ -56,7 +56,7 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
     visual_odometry.configure
 
     viso2_with_imu = TaskContext.get 'viso2_with_imu'
-    Orocos.conf.apply(visual_odometry, ['default'], :override => true)
+    Orocos.conf.apply(viso2_with_imu, ['default'], :override => true)
     viso2_with_imu.configure
 
     viso2_evaluation = TaskContext.get 'viso2_evaluation'
@@ -68,7 +68,7 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
     vicon.configure
 
     camera_firewire_loccam = TaskContext.get 'camera_firewire_loccam'
-    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b'], :override => true)
+    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b', 'auto_exposure'], :override => true)
     camera_firewire_loccam.configure
 
     camera_loccam = TaskContext.get 'camera_loccam'
@@ -79,7 +79,8 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
     visual_odometry.log_all_ports
     viso2_evaluation.log_all_ports
     viso2_with_imu.log_all_ports
-
+    Orocos.log_all
+    
     joystick.raw_command.connect_to                     motion_translator.raw_command
     motion_translator.ptu_command.connect_to            ptu_control.ptu_joints_commands
     motion_translator.motion_command.connect_to         locomotion_control.motion_command
