@@ -29,11 +29,12 @@ Orocos::Process.run 'control' do
     # Start
     platform_driver.start
 
-    joint_elements[18] = Types.base.JointState.Position(0)
-    joint_elements[19] = Types.base.JointState.Position(-1.5708)  #-1.5708
-    joint_elements[20] = Types.base.JointState.Position(2.21)      #2.21
-    joint_elements[21] = Types.base.JointState.Position(-1.5708)  #-1.5708
+    joint_elements[18] = Types.base.JointState.Position(1)
+    joint_elements[19] = Types.base.JointState.Position(1.5708)  #-1.5708
+    joint_elements[20] = Types.base.JointState.Position(0)      #2.21
+    joint_elements[21] = Types.base.JointState.Position(0)  #-1.5708
     joint_elements[22] = Types.base.JointState.Position(0)
+    # pos for visodom: 1 1.5708 0 0 0
 
     command = Types.base.commands.Joints.new(
                 time: Time.at(0),
