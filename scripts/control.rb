@@ -53,7 +53,7 @@ Orocos::Process.run 'control' do
     ptu_control.configure
 
     # Log
-    #Orocos.log_all_ports
+    Orocos.log_all_ports
     #platform_driver.log_all_ports
     #pancam_panorama.log_all_ports
 
