@@ -50,18 +50,18 @@ Orocos.run 'navigation', 'control', 'simulation', 'vortex::Task' => 'vortex', 'm
 	# Motion planning outputs
 	motion_planning.roverPath.connect_to waypoint_navigation.trajectory
 
-	motion_planning.joints.connect_to coupled_control.manipulatorConfig
+	motion_planning.joints.connect_to coupled_control.manipulator_config
 	motion_planning.assignment.connect_to coupled_control.assignment
-	motion_planning.sizePath.connect_to coupled_control.sizePath
+	motion_planning.sizePath.connect_to coupled_control.size_path
 
 	# Coupled control outputs
-	coupled_control.modifiedMotionCommand.connect_to locomotion_control.motion_command
+	coupled_control.modified_motion_command.connect_to locomotion_control.motion_command
 	
-	coupled_control.manipulatorCommand.connect_to vortex.manipulator_commands
+	coupled_control.manipulator_command.connect_to vortex.manipulator_commands
 
 	# Waypoint navigation outputs
-	waypoint_navigation.motion_command.connect_to coupled_control.motionCommand
-	waypoint_navigation.current_segment.connect_to coupled_control.currentSegment
+	waypoint_navigation.motion_command.connect_to coupled_control.motion_command
+	waypoint_navigation.current_segment.connect_to coupled_control.current_segment
 
 	# Locomotion control outputs
 	locomotion_control.joints_commands.connect_to vortex.joints_commands
@@ -71,7 +71,7 @@ Orocos.run 'navigation', 'control', 'simulation', 'vortex::Task' => 'vortex', 'm
 
 	vortex.pose.connect_to waypoint_navigation.pose
 
-	vortex.manipulator_readings.connect_to coupled_control.currentConfig
+	vortex.manipulator_readings.connect_to coupled_control.current_config
 
 	motion_planning.start
 	coupled_control.start

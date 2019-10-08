@@ -74,13 +74,6 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     Orocos.conf.apply(ptu_control, ['default'], :override => true)
     ptu_control.configure
 
-	# setup waypoint_navigation
-    puts "Setting up waypoint_navigation"
-    waypoint_navigation = Orocos.name_service.get 'waypoint_navigation'
-    Orocos.conf.apply(waypoint_navigation, ['exoter'], :override => true)
-    waypoint_navigation.configure
-    puts "done"
-
   	# setup motion_planning
     puts "Setting up motion planning"
     motion_planning = Orocos.name_service.get 'motion_planning'
@@ -129,10 +122,7 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
 
     platform_driver.joints_readings.connect_to            read_joint_dispatcher.joints_readings
 
-    vicon.pose_samples.connect_to                         waypoint_navigation.pose
-
 	# Motion planning outputs
-	motion_planning.roverPath.connect_to                  waypoint_navigation.trajectory
 	motion_planning.joints.connect_to                     coupled_control.manipulator_config
 	motion_planning.assignment.connect_to                 coupled_control.assignment
 	motion_planning.sizePath.connect_to                   coupled_control.size_path
@@ -142,9 +132,7 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     coupled_control.manipulator_command.connect_to        command_joint_dispatcher.arm_commands
 	
 	# Waypoint navigation outputs
-	waypoint_navigation.motion_command.connect_to         coupled_control.motion_command
-	waypoint_navigation.current_segment.connect_to        coupled_control.current_segment
-	waypoint_navigation.trajectory_status.connect_to      coupled_control.trajectory_status
+	coupled_control.trajectory_status = 2
 
     # Start
 	motion_planning.start
@@ -159,7 +147,6 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     ptu_control.start
     motion_translator.start
     joystick.start
-    waypoint_navigation.start
     vicon.start
 
 	Readline::readline("Press ENTER to exit\n")
