@@ -10,7 +10,7 @@ include Orocos
 Bundles.initialize
 
 
-Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'motion_planning', 'coupled_control::Task' => 'coupled_control' do
+Orocos.run 'control', 'unit_vicon', 'navigation', 'coupled_control::Task' => 'coupled_control' do
 
     # Configure
     joystick = Orocos.name_service.get 'joystick'
@@ -74,13 +74,6 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     Orocos.conf.apply(ptu_control, ['default'], :override => true)
     ptu_control.configure
 
-  	# setup motion_planning
-    puts "Setting up motion planning"
-    motion_planning = Orocos.name_service.get 'motion_planning'
-    Orocos.conf.apply(motion_planning, ['default'], :override => true)
-    motion_planning.configure
-    puts "done"
-
   	# setup coupled_control
     puts "Setting up coupled control"
     coupled_control = Orocos.name_service.get 'coupled_control'
@@ -122,20 +115,15 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
 
     platform_driver.joints_readings.connect_to            read_joint_dispatcher.joints_readings
 
-	# Motion planning outputs
-	motion_planning.joints.connect_to                     coupled_control.manipulator_config
-	motion_planning.assignment.connect_to                 coupled_control.assignment
-	motion_planning.sizePath.connect_to                   coupled_control.size_path
-
 	# Coupled control outputs
     coupled_control.modified_motion_command.connect_to    command_arbiter.follower_motion_command
     coupled_control.manipulator_command.connect_to        command_joint_dispatcher.arm_commands
 	
 	# Waypoint navigation outputs
-	coupled_control.trajectory_status = 2
+    status_writer = coupled_control.trajectory_status.writer
+    status_writer.write(2)
 
     # Start
-	motion_planning.start
     command_arbiter.start
 	coupled_control.start
     platform_driver.start
