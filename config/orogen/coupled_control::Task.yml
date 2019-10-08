@@ -17,7 +17,8 @@ smooth_factor: 0.9 # 0 for non smoothing, 0.9 for big smoothing
 
 negative_angles: 0   
 
-sweep_movement_file: '~/rock/bundles/exoter/data/arm_movements/sweep_movement.txt'
+sweep_movement_file: '../../../exoter/data/arm_movements/sweep_movement.txt'
+
 --- name:exoter
 
 position_commands: 1
@@ -37,4 +38,4 @@ smooth_factor: 0.9 # 0 for non smoothing, 0.9 for big smoothing
 
 negative_angles: 1 
 
-sweep_movement_file: '~/rock/bundles/exoter/data/arm_movements/sweep_movement.txt'
+sweep_movement_file: '../../../exoter/data/arm_movements/sweep_movement.txt'
