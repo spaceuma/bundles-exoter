@@ -10,7 +10,7 @@ include Orocos
 Bundles.initialize
 
 
-Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'motion_planning', 'coupled_control::Task' => 'coupled_control' do
+Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'motion_planning', 'coupled_control::Task' => 'coupled_control', 'gps_transformer::Task' => 'gps_transformer' do
 
     # Configure
     joystick = Orocos.name_service.get 'joystick'
@@ -69,6 +69,10 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     vicon = TaskContext.get 'vicon'
     Orocos.conf.apply(vicon, ['default','exoter'], :override => true)
     vicon.configure
+
+    #setup drift gps_transformer
+    gps_transformer = TaskContext.get 'gps_transformer'
+    gps_transformer.configure
 
     ptu_control = Orocos.name_service.get 'ptu_control'
     Orocos.conf.apply(ptu_control, ['default'], :override => true)
@@ -129,7 +133,8 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
 
     platform_driver.joints_readings.connect_to            read_joint_dispatcher.joints_readings
 
-    vicon.pose_samples.connect_to                         waypoint_navigation.pose
+    vicon.pose_samples.connect_to                         gps_transformer.inputPose
+    gps_transformer.worldDriftPose.connect_to             waypoint_navigation.pose
 
 	# Motion planning outputs
 	motion_planning.roverPath.connect_to                  waypoint_navigation.trajectory
@@ -161,6 +166,7 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     joystick.start
     waypoint_navigation.start
     vicon.start
+    gps_transformer.start
 
 	Readline::readline("Press ENTER to exit\n")
 end
