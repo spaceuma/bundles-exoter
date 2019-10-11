@@ -151,6 +151,23 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
 	waypoint_navigation.current_segment.connect_to        coupled_control.current_segment
 	waypoint_navigation.trajectory_status.connect_to      coupled_control.trajectory_status
 
+    # Loggers
+    Orocos.log_all_configuration
+
+    logger_path_planner = Orocos.name_service.get 'autonomy_Logger'
+    logger_path_planner.file = "path_planner.log"
+    logger_path_planner.log(path_planner.trajectory2D)
+    logger_path_planner.log(path_planner.actual_total_cost)
+    logger_path_planner.log(path_planner.global_Total_Cost_map)
+    logger_path_planner.log(path_planner.global_Cost_map)
+    logger_path_planner.log(path_planner.local_Risk_map)
+    logger_path_planner.log(path_planner.local_Propagation_map)
+
+    logger_vicon = Orocos.name_service.get 'vicon_Logger'
+    logger_vicon.file = "vicon.log"
+    logger_vicon.log(vicon.pose_samples)
+    logger_vicon.log(vicon.unlabeled_markers)
+    
     # Start
 	motion_planning.start
     command_arbiter.start
@@ -167,6 +184,10 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     waypoint_navigation.start
     vicon.start
     gps_transformer.start
+
+
+    logger_path_planner.start
+    logger_vicon.start
 
 	Readline::readline("Press ENTER to exit\n")
 end
