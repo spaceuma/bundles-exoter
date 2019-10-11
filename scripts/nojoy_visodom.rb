@@ -13,7 +13,7 @@ Bundles.initialize
 Bundles.transformer.load_conf(Bundles.find_file('config', 'transforms_scripts_exoter.rb'))
 
 # open log file
-log = Orocos::Log::Replay.open("~/rock/bundles/exoter/logs/20190919-1255/control.0.log")
+log = Orocos::Log::Replay.open("~/rock/bundles/exoter/logs/20191007-1615/control.0.log")
 
 Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'unit_visual_odometry' do
     #joystick = Orocos.name_service.get 'joystick'

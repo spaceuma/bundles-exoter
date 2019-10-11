@@ -68,7 +68,7 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
     vicon.configure
 
     camera_firewire_loccam = TaskContext.get 'camera_firewire_loccam'
-    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b'], :override => true)
+    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b','auto_exposure'], :override => true)
     camera_firewire_loccam.configure
 
     camera_loccam = TaskContext.get 'camera_loccam'
@@ -87,7 +87,6 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
     locomotion_control.joints_commands.connect_to       command_joint_dispatcher.joints_commands
     ptu_control.ptu_commands_out.connect_to             command_joint_dispatcher.ptu_commands
     command_joint_dispatcher.motors_commands.connect_to platform_driver.joints_commands
-    platform_driver.joints_readings.connect_to          read_joint_dispatcher.joints_readings
     platform_driver.joints_readings.connect_to          read_joint_dispatcher.joints_readings
     read_joint_dispatcher.motors_samples.connect_to     locomotion_control.joints_readings
     read_joint_dispatcher.ptu_samples.connect_to        ptu_control.ptu_samples
