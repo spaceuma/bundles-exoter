@@ -10,7 +10,7 @@ include Orocos
 Bundles.initialize
 
 
-Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'motion_planning', 'coupled_control::Task' => 'coupled_control', 'gps_transformer::Task' => 'gps_transformer' do
+Orocos.run 'control', 'unit_vicon', 'navigation', 'gps_transformer::Task' => 'gps_transformer' do
 
     # Configure
     joystick = Orocos.name_service.get 'joystick'
@@ -48,7 +48,7 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
 	# setup command joint_dispatcher
     puts "Setting up command joint dispatcher"
     command_joint_dispatcher = Orocos.name_service.get 'command_joint_dispatcher'
-    Orocos.conf.apply(command_joint_dispatcher, ['exoter_arm_commanding'], :override => true)
+    Orocos.conf.apply(command_joint_dispatcher, ['exoter_commanding'], :override => true)
     command_joint_dispatcher.configure
     puts "done"
 
@@ -62,7 +62,7 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     # setup read joint_dispatcher
     puts "Setting up read joint dispatcher"
     read_joint_dispatcher = Orocos.name_service.get 'read_joint_dispatcher'
-    Orocos.conf.apply(read_joint_dispatcher, ['exoter_arm_reading'], :override => true)
+    Orocos.conf.apply(read_joint_dispatcher, ['exoter_reading'], :override => true)
     read_joint_dispatcher.configure
     puts "done"
 
@@ -70,7 +70,6 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     Orocos.conf.apply(vicon, ['default','exoter'], :override => true)
     vicon.configure
 
-    #setup drift gps_transformer
     gps_transformer = TaskContext.get 'gps_transformer'
     gps_transformer.configure
 
@@ -83,20 +82,6 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     waypoint_navigation = Orocos.name_service.get 'waypoint_navigation'
     Orocos.conf.apply(waypoint_navigation, ['exoter'], :override => true)
     waypoint_navigation.configure
-    puts "done"
-
-  	# setup motion_planning
-    puts "Setting up motion planning"
-    motion_planning = Orocos.name_service.get 'motion_planning'
-    Orocos.conf.apply(motion_planning, ['default'], :override => true)
-    motion_planning.configure
-    puts "done"
-
-  	# setup coupled_control
-    puts "Setting up coupled control"
-    coupled_control = Orocos.name_service.get 'coupled_control'
-    Orocos.conf.apply(coupled_control, ['exoter'], :override => true)
-    coupled_control.configure
     puts "done"
 
 	puts "Connecting ports"
@@ -125,7 +110,6 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     read_joint_dispatcher.joints_samples.connect_to       locomotion_switcher.joints_readings
     read_joint_dispatcher.motors_samples.connect_to       locomotion_switcher.motors_readings
     read_joint_dispatcher.motors_samples.connect_to       locomotion_control.joints_readings
-    read_joint_dispatcher.arm_samples.connect_to          coupled_control.current_config
     read_joint_dispatcher.joints_samples.connect_to       wheel_walking_control.joint_readings
     read_joint_dispatcher.ptu_samples.connect_to          ptu_control.ptu_samples
 
@@ -134,27 +118,13 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     platform_driver.joints_readings.connect_to            read_joint_dispatcher.joints_readings
 
     vicon.pose_samples.connect_to                         gps_transformer.inputPose
-    gps_transformer.worldDriftPose.connect_to             waypoint_navigation.pose
-
-	# Motion planning outputs
-	motion_planning.roverPath.connect_to                  waypoint_navigation.trajectory
-	motion_planning.joints.connect_to                     coupled_control.manipulator_config
-	motion_planning.assignment.connect_to                 coupled_control.assignment
-	motion_planning.sizePath.connect_to                   coupled_control.size_path
+    gps_transformer.outputDriftPose.connect_to            waypoint_navigation.pose
 
 	# Coupled control outputs
-    coupled_control.modified_motion_command.connect_to    command_arbiter.follower_motion_command
-    coupled_control.manipulator_command.connect_to        command_joint_dispatcher.arm_commands
-	
-	# Waypoint navigation outputs
-	waypoint_navigation.motion_command.connect_to         coupled_control.motion_command
-	waypoint_navigation.current_segment.connect_to        coupled_control.current_segment
-	waypoint_navigation.trajectory_status.connect_to      coupled_control.trajectory_status
+	waypoint_navigation.motion_command.connect_to         command_arbiter.follower_motion_command
 
     # Start
-	motion_planning.start
     command_arbiter.start
-	coupled_control.start
     platform_driver.start
     read_joint_dispatcher.start
     command_joint_dispatcher.start

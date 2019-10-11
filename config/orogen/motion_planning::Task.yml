@@ -8,12 +8,12 @@ assignmentVariable: 'assignment'
 numJoints: 5
 
 
-xm: 1.5
-ym: 1.2
+xm: 5
+ym: 5
 xr: 1.08
 yr: 5.28
 initHeading: 0
-mapDirectory: '/home/marta/rock/bundles/exoter/data/maps/prl/'
+mapDirectory: '../../../exoter/data/maps/prl/'
 resolution: 0.02
 size: 8.91
 

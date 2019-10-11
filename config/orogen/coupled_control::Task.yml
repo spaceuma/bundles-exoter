@@ -1,37 +1,41 @@
 --- name:vortex
 
-positionCommands: 0
+position_commands: 0
 
-mMaxSpeed: 0.01
+m_max_speed: 0.01
 
 gain: 1
 
-numJoints: 5
+num_joints: 5
 
-modelInitialConfig: [1.570796,0,-2.21,0,0]
-realInitialConfig: [0,0,0,0,0]
+model_initial_config: [1.570796,0,-2.21,0,0]
+real_initial_config: [0,0,0,0,0]
 
-jointsDirection: [-1,-1,1,-1,1]
+joints_direction: [-1,-1,1,-1,1]
 
-smoothFactor: 0.9 # 0 for non smoothing, 0.9 for big smoothing
+smooth_factor: 0.95 # 0 for non smoothing, 0.95 for big smoothing
 
-negativeAngles: 0   
+negative_angles: 0   
+
+sweep_movement_file: '../../../exoter/data/arm_movements/sweep_movement.txt'
 
 --- name:exoter
 
-positionCommands: 1
+position_commands: 1
 
-mMaxSpeed: 0.01
+m_max_speed: 0.01
 
 gain: 1
 
-numJoints: 5
+num_joints: 5
 
-modelInitialConfig: [1.570796,0,-2.21,0,0]
-realInitialConfig: [0,-1.570796,2.21,-1.570796,0]
+model_initial_config: [1.570796,0,-2.21,0,0]
+real_initial_config: [0,-1.570796,2.21,-1.570796,0]
 
-jointsDirection: [-1,-1,-1,1,1]
+joints_direction: [-1,-1,-1,1,1]
 
-smoothFactor: 0.9 # 0 for non smoothing, 0.9 for big smoothing
+smooth_factor: 0.95 # 0 for non smoothing, 0.95 for big smoothing
 
-negativeAngles: 1 
+negative_angles: 1 
+
+sweep_movement_file: '../../../exoter/data/arm_movements/sweep_movement.txt'
