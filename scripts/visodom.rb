@@ -68,7 +68,8 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
     vicon.configure
 
     camera_firewire_loccam = TaskContext.get 'camera_firewire_loccam'
-    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b', 'auto_exposure'], :override => true)
+    Orocos.conf.apply(camera_firewire_loccam, ['hdpr_bb2'], :override => true)
+    #Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b'], :override => true)
     camera_firewire_loccam.configure
 
     camera_loccam = TaskContext.get 'camera_loccam'
@@ -80,13 +81,14 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
     viso2_evaluation.log_all_ports
     viso2_with_imu.log_all_ports
     Orocos.log_all
-    
+
     joystick.raw_command.connect_to                     motion_translator.raw_command
     motion_translator.ptu_command.connect_to            ptu_control.ptu_joints_commands
     motion_translator.motion_command.connect_to         locomotion_control.motion_command
     locomotion_control.joints_commands.connect_to       command_joint_dispatcher.joints_commands
     ptu_control.ptu_commands_out.connect_to             command_joint_dispatcher.ptu_commands
     command_joint_dispatcher.motors_commands.connect_to platform_driver.joints_commands
+    platform_driver.joints_readings.connect_to          read_joint_dispatcher.joints_readings
     platform_driver.joints_readings.connect_to          read_joint_dispatcher.joints_readings
     read_joint_dispatcher.motors_samples.connect_to     locomotion_control.joints_readings
     read_joint_dispatcher.ptu_samples.connect_to        ptu_control.ptu_samples
@@ -123,4 +125,3 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
 
     Readline::readline("Press Enter to exit\n") do
     end
-end
