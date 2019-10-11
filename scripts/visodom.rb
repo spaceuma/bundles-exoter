@@ -68,8 +68,7 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
     vicon.configure
 
     camera_firewire_loccam = TaskContext.get 'camera_firewire_loccam'
-    Orocos.conf.apply(camera_firewire_loccam, ['hdpr_bb2'], :override => true)
-    #Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b'], :override => true)
+    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b'], :override => true)
     camera_firewire_loccam.configure
 
     camera_loccam = TaskContext.get 'camera_loccam'
@@ -125,3 +124,4 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
 
     Readline::readline("Press Enter to exit\n") do
     end
+end
