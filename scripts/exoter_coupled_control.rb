@@ -10,7 +10,7 @@ include Orocos
 Bundles.initialize
 
 
-Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'motion_planning', 'coupled_control::Task' => 'coupled_control', 'gps_transformer::Task' => 'gps_transformer' do
+Orocos.run 'control', 'navigation', 'motion_planning::Task' => 'motion_planning', 'coupled_control::Task' => 'coupled_control', 'gps_transformer::Task' => 'gps_transformer', 'vicon::Task' => 'vicon' do
 
     # Configure
     joystick = Orocos.name_service.get 'joystick'
@@ -66,7 +66,7 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
     read_joint_dispatcher.configure
     puts "done"
 
-    vicon = TaskContext.get 'vicon'
+    vicon = Orocos.name_service.get 'vicon'
     Orocos.conf.apply(vicon, ['default','exoter'], :override => true)
     vicon.configure
 
@@ -152,7 +152,9 @@ Orocos.run 'control', 'unit_vicon', 'navigation', 'motion_planning::Task' => 'mo
 	waypoint_navigation.trajectory_status.connect_to      coupled_control.trajectory_status
 
     # Loggers
-    Orocos.log_all_ports
+    #Orocos.log_all_ports
+    vicon.log_all_ports
+    motion_planning.log_all_ports
 
     # Start
 	motion_planning.start
