@@ -11,7 +11,7 @@ Bundles.initialize
 
 Bundles.transformer.load_conf(Bundles.find_file('config', 'transforms_scripts_exoter.rb'))
 
-Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'unit_visual_odometry' do
+Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'unit_visual_odometry', 'vicon::Task' => 'vicon' do
     joystick = Orocos.name_service.get 'joystick'
     joystick.device = "/dev/input/js0"
     # In case the dongle is not connected exit gracefully
@@ -63,7 +63,7 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
     Orocos.conf.apply(viso2_evaluation, ['default'], :override => true)
     viso2_evaluation.configure
 
-    vicon = TaskContext.get 'vicon'
+    vicon = Orocos.name_service.get 'vicon'
     Orocos.conf.apply(vicon, ['default','exoter'], :override => true)
     vicon.configure
 

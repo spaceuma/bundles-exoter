@@ -15,16 +15,7 @@ Bundles.transformer.load_conf(Bundles.find_file('config', 'transforms_scripts_ex
 # open log file
 log = Orocos::Log::Replay.open("~/rock/bundles/exoter/logs/20191007-1615/control.0.log")
 
-Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'unit_visual_odometry' do
-    #joystick = Orocos.name_service.get 'joystick'
-    #joystick.device = "/dev/input/js0"
-    ## In case the dongle is not connected exit gracefully
-    #begin
-    #    Orocos.conf.apply(joystick, ['default'], :override => true)
-    #    joystick.configure
-    #    rescue
-    #    abort("Cannot configure the joystick, is the dongle connected to ExoTeR?")
-    #end
+Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'unit_visual_odometry', 'vicon::Task' => 'vicon' do
 
     motion_translator = Orocos.name_service.get 'motion_translator'
     Orocos.conf.apply(motion_translator, ['exoter'], :override => true)
@@ -67,7 +58,7 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'uni
     Orocos.conf.apply(viso2_evaluation, ['default'], :override => true)
     viso2_evaluation.configure
 
-    vicon = TaskContext.get 'vicon'
+    vicon = Orocos.name_service.get 'vicon'
     Orocos.conf.apply(vicon, ['default','exoter'], :override => true)
     vicon.configure
 

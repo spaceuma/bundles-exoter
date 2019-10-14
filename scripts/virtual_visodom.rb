@@ -13,7 +13,10 @@ Bundles.initialize
 Bundles.transformer.load_conf(Bundles.find_file('config', 'transforms_scripts_exoter.rb'))
 
 # open log file
-log = Orocos::Log::Replay.open('~/rock/bundles/exoter/logs/20190919-1255/loccam.0.log', '~/rock/bundles/exoter/logs/20190919-1255/control.0.log', '~/rock/bundles/exoter/logs/20190919-1255/imu.0.log','~/rock/bundles/exoter/logs/20190919-1255/unit_visual_odometry.0.log')
+log = Orocos::Log::Replay.open('~/rock/bundles/exoter/logs/20190919-1255/loccam.0.log', 
+                               '~/rock/bundles/exoter/logs/20190919-1255/control.0.log', 
+                               '~/rock/bundles/exoter/logs/20190919-1255/imu.0.log',
+                               '~/rock/bundles/exoter/logs/20190919-1255/unit_visual_odometry.0.log')
 log.use_sample_time = true
 
 #Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'unit_visual_odometry' do
@@ -96,7 +99,7 @@ Orocos::Process.run 'unit_visual_odometry' do
     log.camera_loccam.left_frame.connect_to             visual_odometry.left_frame
     log.camera_loccam.right_frame.connect_to            visual_odometry.right_frame
 
-#   log.motion_translator.motion_command.connect_to     visual_odometry.motion_command
+    log.motion_translator.motion_command.connect_to     visual_odometry.motion_command
     visual_odometry.delta_pose_samples_out.connect_to   viso2_with_imu.delta_pose_samples_in
     log.imu_stim300.orientation_samples_out.connect_to      viso2_with_imu.pose_samples_imu
 

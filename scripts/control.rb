@@ -9,7 +9,7 @@ include Orocos
 Bundles.initialize
 
 # Execute the task
-Orocos::Process.run 'control' do
+Orocos::Process.run 'control', 'vicon::Task' => 'vicon' do
 
     # Configure
     joystick = Orocos.name_service.get 'joystick'
@@ -52,6 +52,10 @@ Orocos::Process.run 'control' do
     Orocos.conf.apply(ptu_control, ['default'], :override => true)
     ptu_control.configure
 
+    vicon = Orocos.name_service.get 'vicon'
+    Orocos.conf.apply(vicon, ['default', 'exoter'], :override => true)
+    vicon.configure
+    
     # Log
     Orocos.log_all_ports
     #platform_driver.log_all_ports
@@ -93,6 +97,7 @@ Orocos::Process.run 'control' do
     ptu_control.start
     motion_translator.start
     joystick.start
+    vicon.start
 
     Readline::readline("Press Enter to exit\n") do
     end
