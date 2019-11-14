@@ -11,13 +11,12 @@ Bundles.initialize
 
 Bundles.transformer.load_conf(Bundles.find_file('config', 'transforms_scripts_exoter.rb'))
 
-Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'unit_bb3', 'unit_visual_odometry', 'vicon::Task' => 'vicon' do
-
+Orocos::Process.run 'control', 'loccam', 'imu', 'unit_vicon', 'navigation', 'unit_visual_odometry' do
     joystick = Orocos.name_service.get 'joystick'
     joystick.device = "/dev/input/js0"
     # In case the dongle is not connected exit gracefully
     begin
-        Orocos.conf.apply(joystick, ['default'], :override => true)
+     ==   Orocos.conf.apply(joystick, ['default'], :override => true)
         joystick.configure
         rescue
         abort("Cannot configure the joystick, is the dongle connected to ExoTeR?")
@@ -57,40 +56,30 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'unit_bb3', 'unit_
     visual_odometry.configure
 
     viso2_with_imu = TaskContext.get 'viso2_with_imu'
-    Orocos.conf.apply(viso2_with_imu, ['default'], :override => true)
+    Orocos.conf.apply(visual_odometry, ['default'], :override => true)
     viso2_with_imu.configure
 
     viso2_evaluation = TaskContext.get 'viso2_evaluation'
     Orocos.conf.apply(viso2_evaluation, ['default'], :override => true)
     viso2_evaluation.configure
 
-    vicon = Orocos.name_service.get 'vicon'
+    vicon = TaskContext.get 'vicon'
     Orocos.conf.apply(vicon, ['default','exoter'], :override => true)
     vicon.configure
 
     camera_firewire_loccam = TaskContext.get 'camera_firewire_loccam'
-    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b','auto_exposure'], :override => true)
+    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b'], :override => true)
     camera_firewire_loccam.configure
 
     camera_loccam = TaskContext.get 'camera_loccam'
     Orocos.conf.apply(camera_loccam, ['hdpr_bb2'], :override => true)
     camera_loccam.configure
 
-## camera bb3
-#    camera_firewire_loccam = TaskContext.get 'camera_firewire_bb3'
-#    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb3', 'auto_exposure'], :override => true)
-#    camera_firewire_loccam.configure
-#
-#    camera_loccam = TaskContext.get 'camera_bb3'
-#    Orocos.conf.apply(camera_loccam, ['default'], :override => true)
-#    camera_loccam.configure
-## camera bb3
-
-    #camera_loccam.log_all_ports
-    #visual_odometry.log_all_ports
-    #viso2_evaluation.log_all_ports
-    #viso2_with_imu.log_all_ports
-    Orocos.log_all
+    camera_loccam.log_all_ports
+    visual_odometry.log_all_ports
+    viso2_evaluation.log_all_ports
+    viso2_with_imu.log_all_ports
+    #Orocos.log_all_ports
 
     joystick.raw_command.connect_to                     motion_translator.raw_command
     motion_translator.ptu_command.connect_to            ptu_control.ptu_joints_commands
@@ -114,7 +103,6 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'unit_bb3', 'unit_
 
     vicon.pose_samples.connect_to                       viso2_evaluation.groundtruth_pose
     viso2_with_imu.pose_samples_out.connect_to          viso2_evaluation.odometry_pose
-    #visual_odometry.pose_samples_out.connect_to          viso2_evaluation.odometry_pose
 
     platform_driver.start
     read_joint_dispatcher.start
@@ -125,8 +113,8 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'unit_bb3', 'unit_
     joystick.start
     imu_stim300.start
 
-    camera_firewire_loccam.start
     camera_loccam.start
+    camera_firewire_loccam.start
 
     visual_odometry.start
     viso2_with_imu.start
