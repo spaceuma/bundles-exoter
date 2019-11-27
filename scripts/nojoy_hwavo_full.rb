@@ -17,10 +17,10 @@ Bundles.transformer.load_conf(tfse_file)
 #                               '~/rock/bundles/exoter/logs/20190919-1255/control.0.log', 
 #                               '~/rock/bundles/exoter/logs/20190919-1255/imu.0.log',
 #                               '~/rock/bundles/exoter/logs/20190919-1255/unit_visual_odometry.0.log')
-log = Orocos::Log::Replay.open('~/rock/bundles/exoter/logs/20191021-1357/loccam.0.log', 
-                               '~/rock/bundles/exoter/logs/20191021-1357/control.0.log', 
-                               '~/rock/bundles/exoter/logs/20191021-1357/imu.0.log',
-                               '~/rock/bundles/exoter/logs/20191021-1357/vicon.0.log')
+log = Orocos::Log::Replay.open('~/rock/bundles/exoter/logs/20191101-1529/loccam.0.log', 
+                               '~/rock/bundles/exoter/logs/20191101-1529/control.0.log', 
+                               '~/rock/bundles/exoter/logs/20191101-1529/imu.0.log',
+                               '~/rock/bundles/exoter/logs/20191101-1529/vicon.0.log')
 
 log.use_sample_time = true
 
@@ -46,14 +46,11 @@ Orocos::Process.run 'unit_visual_odometry', 'stereo_vo::SpartanVO' => 'spartan' 
 
     # connect or not the IMU to the viso evaluation
     spartan.vo_out.connect_to                            viso2_evaluation.odometry_pose
-    #visual_odometry.pose_samples_out.connect_to         viso2_evaluation.odometry_pose
 
 
     spartan.start
     viso2_evaluation.start
     
     log.run(true,1)
-
-    Readline::readline('Press <ENTER> to quit...');
 
 end

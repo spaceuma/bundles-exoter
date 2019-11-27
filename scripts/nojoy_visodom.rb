@@ -77,7 +77,7 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'unit_visual_odome
     Orocos.log_all_ports
     
     #joystick.raw_command.connect_to                     motion_translator.raw_command
-    motion_translator.ptu_command.connect_to            ptu_control.ptu_joints_commands
+    log.motion_translator.ptu_command.connect_to            ptu_control.ptu_joints_commands
     
     # connect the lg instead of the task
     #motion_translator.motion_command.connect_to         locomotion_control.motion_command
