@@ -63,7 +63,8 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'vicon::Task' => '
     vicon.configure
 
     camera_firewire_loccam = TaskContext.get 'camera_firewire_loccam'
-    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b','auto_exposure'], :override => true)
+    #Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b','auto_exposure'], :override => true)
+    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b'], :override => true)
     camera_firewire_loccam.configure
 
     camera_loccam = TaskContext.get 'camera_loccam'

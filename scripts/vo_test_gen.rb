@@ -15,7 +15,8 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'vicon::Task' => '
 
     ## Change the name in the Orocos.conf.apply file to select the desired trajectory in ~/rock/bundles/rover/config/orogen/motion_generator::Task.yml
     motion_generator = Orocos.name_service.get 'motion_generator'
-    Orocos.conf.apply(motion_generator, ['default'], :override => true)
+    #Orocos.conf.apply(motion_generator, ['default'], :override => true)
+    Orocos.conf.apply(motion_generator, ['backwards_4m'], :override => true)
     motion_generator.configure
 
     locomotion_control = Orocos.name_service.get 'locomotion_control'
@@ -55,7 +56,8 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'vicon::Task' => '
     vicon.configure
 
     camera_firewire_loccam = TaskContext.get 'camera_firewire_loccam'
-    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b','auto_exposure'], :override => true)
+    #Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b','auto_exposure'], :override => true)
+    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b'], :override => true)
     camera_firewire_loccam.configure
 
     camera_loccam = TaskContext.get 'camera_loccam'
