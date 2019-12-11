@@ -38,7 +38,7 @@ Orocos::Process.run 'unit_vicon', 'unit_visual_odometry', 'navigation', 'control
         Orocos.conf.apply(joystick, ['default'], :override => true)
         joystick.configure
     rescue
-        #abort('Cannot configure the joystick, is the dongle connected to ExoTeR?')
+        abort('Cannot configure the joystick, is the dongle connected to ExoTeR?')
     end
 
     motion_translator = Orocos.name_service.get 'motion_translator'
