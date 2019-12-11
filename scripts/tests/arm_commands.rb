@@ -29,13 +29,25 @@ Orocos::Process.run 'control' do
     # Start
     platform_driver.start
 
-    joint_elements[18] = Types.base.JointState.Position(1)
-    joint_elements[19] = Types.base.JointState.Position(1.5708)
-    joint_elements[20] = Types.base.JointState.Position(0)
-    joint_elements[21] = Types.base.JointState.Position(0)
-    joint_elements[22] = Types.base.JointState.Position(0)
+    # CONVENTION: Positive speed = joint right-hand-rule rotation around the local z-axis,
+    # where the local z-axis is pointing "into" the joint, i.e. looking back toward the joint
+    # along the next kinematic link means we are looking at the positive end of the z-axis.
+
+    #joint_elements[18] = Types.base.JointState.Position(0)
+    joint_elements[19] = Types.base.JointState.Position(1.75)
+    joint_elements[20] = Types.base.JointState.Position(1.3)
+    joint_elements[21] = Types.base.JointState.Position(-1.5708)
+    joint_elements[22] = Types.base.JointState.Position(-1.5708)
     # initial config: 0 -1.5708 2.21 -1.5708 0
-    # pos for visodom: 1 1.5708 0 0 0
+    # pos for vo: 1 1.5708 0 0 0
+
+    # The following can be useful in cases where a specific configuration is required and
+    # for some reason the arm's internal logic tries to reach the desired position
+    # the long way around, which can cause delays or lead to the arm crashing into
+    # other rover parts.
+    # joint_elements[JOINT_ID] = Types.base.JointState.Speed(SPEED)
+
+
 
     command = Types.base.commands.Joints.new(
                 time: Time.at(0),
