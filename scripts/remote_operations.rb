@@ -9,10 +9,10 @@ include Orocos
 
 # Command line options for the script, default values
 options = {:nav => true,
-           :pan => true,
+           :pan => false,
            :loc => true,
-           :v => false,
-           :autonav => false}
+           :v => true,
+           :autonav => true}
 
 # Options parser
 OptionParser.new do |opts|
@@ -39,7 +39,7 @@ Orocos::Process.run 'control', 'pancam_bb3', 'navcam', 'loccam', 'imu', 'tmtchan
     # In case the dongle is not connected exit gracefully
     begin
         # Configure the joystick
-        Orocos.conf.apply(joystick, ['default'], :override => true)
+        Orocos.conf.apply(joystick, ['default', 'logitech_gamepad'], :override => true)
         joystick.configure
     rescue
         # Abort the process as there is no joystick to get input from
@@ -56,7 +56,7 @@ Orocos::Process.run 'control', 'pancam_bb3', 'navcam', 'loccam', 'imu', 'tmtchan
     locomotion_control.configure
 
     wheel_walking_control = Orocos.name_service.get 'wheel_walking_control'
-    Orocos.conf.apply(wheel_walking_control, ['default'], :override => true)
+    Orocos.conf.apply(wheel_walking_control, ['exoter'], :override => true)
     wheel_walking_control.configure
 
     locomotion_switcher = Orocos.name_service.get 'locomotion_switcher'
@@ -68,7 +68,7 @@ Orocos::Process.run 'control', 'pancam_bb3', 'navcam', 'loccam', 'imu', 'tmtchan
     command_joint_dispatcher.configure
 
     platform_driver = Orocos.name_service.get 'platform_driver_exoter'
-    Orocos.conf.apply(platform_driver, ['default'], :override => true)
+    Orocos.conf.apply(platform_driver, ['arm'], :override => true)
     platform_driver.configure
 
     read_joint_dispatcher = Orocos.name_service.get 'read_joint_dispatcher'
