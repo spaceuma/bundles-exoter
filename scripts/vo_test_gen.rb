@@ -18,6 +18,7 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'vicon::Task' => '
     Orocos.conf.apply(motion_generator, ['default'], :override => true)
     #Orocos.conf.apply(motion_generator, ['ptu_test'], :override => true)
     #Orocos.conf.apply(motion_generator, ['backwards_4m'], :override => true)
+    #Orocos.conf.apply(motion_generator, ['stationary'], :override => true)
     motion_generator.configure
 
     locomotion_control = Orocos.name_service.get 'locomotion_control'
@@ -57,12 +58,15 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'vicon::Task' => '
     vicon.configure
 
     camera_firewire_loccam = TaskContext.get 'camera_firewire_loccam'
-    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b','auto_exposure'], :override => true)
+    #Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b','auto_exposure'], :override => true)
     #Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2_b'], :override => true)
+    Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2','auto_exposure'], :override => true)
+    #Orocos.conf.apply(camera_firewire_loccam, ['exoter_bb2'], :override => true)
     camera_firewire_loccam.configure
 
     camera_loccam = TaskContext.get 'camera_loccam'
-    Orocos.conf.apply(camera_loccam, ['hdpr_bb2'], :override => true)
+    #Orocos.conf.apply(camera_loccam, ['hdpr_bb2'], :override => true)
+    Orocos.conf.apply(camera_loccam, ['exoter_bb2'], :override => true)
     camera_loccam.configure
 
     Orocos.log_all
@@ -112,5 +116,7 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'vicon::Task' => '
 
     Readline::readline("Press Enter to exit\n") do
     end
-
+    camera_loccam.stop
+    camera_firewire_loccam.stop
+    motion_generator.stop
 end
