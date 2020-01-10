@@ -13,9 +13,10 @@ tfse_file = '/home/marta/rock/bundles/rover/config/transforms_scripts_exoter.rb'
 Bundles.transformer.load_conf(tfse_file)
 
 # open log file 
-log = Orocos::Log::Replay.open('~/rock/bundles/exoter/logs/20191204-1620/loccam.0.log', 
-                               '~/rock/bundles/exoter/logs/20191204-1620/imu.0.log',
-                               '~/rock/bundles/exoter/logs/20191204-1620/vicon.0.log')
+log = Orocos::Log::Replay.open('~/rock/bundles/exoter/logs/20200109-1452/loccam.0.log',
+                               '~/rock/bundles/exoter/logs/20200109-1452/imu.0.log',
+                               '~/rock/bundles/exoter/logs/20200109-1452/control.0.log',
+                               '~/rock/bundles/exoter/logs/20200109-1452/vicon.0.log')
 
 log.use_sample_time = true
 
