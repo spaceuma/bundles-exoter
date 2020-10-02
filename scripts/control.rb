@@ -8,7 +8,7 @@ include Orocos
 # Initialize bundles to find the configurations for the packages
 Bundles.initialize
 
-# Execute the task
+# Execute the tasks
 Orocos::Process.run 'control' do
 
     # Configure
@@ -51,11 +51,6 @@ Orocos::Process.run 'control' do
     ptu_control = Orocos.name_service.get 'ptu_control'
     Orocos.conf.apply(ptu_control, ['default'], :override => true)
     ptu_control.configure
-    
-    # Log
-    Orocos.log_all_ports
-    #platform_driver.log_all_ports
-    #pancam_panorama.log_all_ports
 
     # Connect
     joystick.raw_command.connect_to                       motion_translator.raw_command
@@ -97,3 +92,4 @@ Orocos::Process.run 'control' do
     Readline::readline("Press Enter to exit\n") do
     end
 end
+
