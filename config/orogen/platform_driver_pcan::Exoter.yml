@@ -43,7 +43,7 @@ param_gear_motor_arm:
 
 # motor parameters of the tilt drive
 param_gear_motor_tilt:
-  dPtpVelDefaultIncrS: 30000
+  dPtpVelDefaultIncrS: 50000
   dVelMaxEncIncrS: 68000
   dPosLimitLowIncr: -200000
   dBeltRatio: 1
@@ -62,7 +62,7 @@ param_gear_motor_tilt:
 
 # motor parameters of the pan drive
 param_gear_motor_pan:
-  dPtpVelDefaultIncrS: 30000
+  dPtpVelDefaultIncrS: 50000
   dVelMaxEncIncrS: 68000
   dPosLimitLowIncr: -410000
   dBeltRatio: 1
@@ -197,7 +197,7 @@ param_gear_motor_arm:
 
 # motor parameters of the tilt drive
 param_gear_motor_tilt:
-  dPtpVelDefaultIncrS: 30000
+  dPtpVelDefaultIncrS: 50000
   dVelMaxEncIncrS: 68000
   dPosLimitLowIncr: -200000
   dBeltRatio: 1
@@ -216,7 +216,7 @@ param_gear_motor_tilt:
 
 # motor parameters of the pan drive
 param_gear_motor_pan:
-  dPtpVelDefaultIncrS: 30000
+  dPtpVelDefaultIncrS: 50000
   dVelMaxEncIncrS: 68000
   dPosLimitLowIncr: -410000
   dBeltRatio: 1
@@ -274,7 +274,7 @@ param_gear_motor_walk:
 # motor parameters of the wheel drives
 param_gear_motor_wheel:
   dPtpVelDefaultIncrS: 50000
-  dVelMaxEncIncrS: 75000
+  dVelMaxEncIncrS: 81000
   dPosLimitLowIncr: -100000000
   dBeltRatio: 1
   iSign: 1
