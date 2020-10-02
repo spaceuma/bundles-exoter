@@ -15,12 +15,12 @@ Orocos::Process.run 'control', 'loccam', 'imu', 'navigation', 'vicon::Task' => '
 
     ## Change the name in the Orocos.conf.apply file to select the desired trajectory in ~/rock/bundles/rover/config/orogen/motion_generator::Task.yml
     motion_generator = Orocos.name_service.get 'motion_generator'
-    Orocos.conf.apply(motion_generator, ['default'], :override => true)
+    #Orocos.conf.apply(motion_generator, ['default'], :override => true)
     #Orocos.conf.apply(motion_generator, ['point_turn'], :override => true)
     #Orocos.conf.apply(motion_generator, ['L_trajectory'], :override => true)
     #Orocos.conf.apply(motion_generator, ['ptu_test'], :override => true)
     #Orocos.conf.apply(motion_generator, ['backwards_4m'], :override => true)
-    #Orocos.conf.apply(motion_generator, ['stationary'], :override => true)
+    Orocos.conf.apply(motion_generator, ['stationary'], :override => true)
     motion_generator.configure
 
     locomotion_control = Orocos.name_service.get 'locomotion_control'
