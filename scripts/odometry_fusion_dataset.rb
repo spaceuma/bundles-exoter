@@ -49,6 +49,14 @@ Orocos::Process.run 'groundtruth', 'unit_visual_odometry', 'navigation', 'contro
     Orocos.conf.apply(locomotion_control, ['exoter'], :override => true)
     locomotion_control.configure
 
+    wheel_walking_control = Orocos.name_service.get 'wheel_walking_control'
+    Orocos.conf.apply(wheel_walking_control, ['exoter'], :override => true)
+    wheel_walking_control.configure
+
+    locomotion_switcher = Orocos.name_service.get 'locomotion_switcher'
+    Orocos.conf.apply(locomotion_switcher, ['default'], :override => true)
+    locomotion_switcher.configure
+
     command_joint_dispatcher = Orocos.name_service.get 'command_joint_dispatcher'
     Orocos.conf.apply(command_joint_dispatcher, ['exoter_commanding'], :override => true)
     command_joint_dispatcher.configure
@@ -105,15 +113,32 @@ Orocos::Process.run 'groundtruth', 'unit_visual_odometry', 'navigation', 'contro
     # Connections
     Orocos.log_all_ports
 
-    joystick.raw_command.connect_to                     motion_translator.raw_command
-    motion_translator.ptu_command.connect_to            ptu_control.ptu_joints_commands
-    motion_translator.motion_command.connect_to         locomotion_control.motion_command
-    locomotion_control.joints_commands.connect_to       command_joint_dispatcher.joints_commands
-    ptu_control.ptu_commands_out.connect_to             command_joint_dispatcher.ptu_commands
-    command_joint_dispatcher.motors_commands.connect_to platform_driver.joints_commands
-    platform_driver.joints_readings.connect_to          read_joint_dispatcher.joints_readings
-    read_joint_dispatcher.motors_samples.connect_to     locomotion_control.joints_readings
-    read_joint_dispatcher.ptu_samples.connect_to        ptu_control.ptu_samples
+    joystick.raw_command.connect_to                       motion_translator.raw_command
+
+    motion_translator.ptu_command.connect_to              ptu_control.ptu_joints_commands
+    ptu_control.ptu_commands_out.connect_to               command_joint_dispatcher.ptu_commands
+
+    motion_translator.motion_command.connect_to           locomotion_switcher.motion_command
+    motion_translator.locomotion_mode.connect_to          locomotion_switcher.locomotion_mode_override
+
+    locomotion_switcher.kill_switch.connect_to            wheel_walking_control.kill_switch
+    locomotion_switcher.reset_dep_joints.connect_to       wheel_walking_control.reset_dep_joints
+    locomotion_switcher.lc_motion_command.connect_to      locomotion_control.motion_command
+    
+    read_joint_dispatcher.joints_samples.connect_to       locomotion_switcher.joints_readings
+    read_joint_dispatcher.motors_samples.connect_to       locomotion_switcher.motors_readings
+
+    locomotion_control.joints_commands.connect_to         locomotion_switcher.lc_joints_commands
+    wheel_walking_control.joint_commands.connect_to       locomotion_switcher.ww_joints_commands
+
+    locomotion_switcher.joints_commands.connect_to        command_joint_dispatcher.joints_commands
+
+    command_joint_dispatcher.motors_commands.connect_to   platform_driver.joints_commands
+    platform_driver.joints_readings.connect_to            read_joint_dispatcher.joints_readings
+    read_joint_dispatcher.motors_samples.connect_to       locomotion_control.joints_readings
+    read_joint_dispatcher.joints_samples.connect_to       wheel_walking_control.joint_readings
+    read_joint_dispatcher.ptu_samples.connect_to          ptu_control.ptu_samples
+
     camera_firewire_loccam.frame.connect_to             camera_loccam.frame_in
     camera_loccam.left_frame.connect_to                 spartan.img_in_left
     camera_loccam.right_frame.connect_to                spartan.img_in_right
@@ -131,14 +156,17 @@ Orocos::Process.run 'groundtruth', 'unit_visual_odometry', 'navigation', 'contro
     ##############################
 
     # Start tasks
-
     platform_driver.start
     read_joint_dispatcher.start
     command_joint_dispatcher.start
     locomotion_control.start
+    wheel_walking_control.start
+    locomotion_switcher.start
     ptu_control.start
     motion_translator.start
     joystick.start
+
+    
     camera_loccam.start
     camera_firewire_loccam.start
     imu_stim300.start
