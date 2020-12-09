@@ -1,23 +1,21 @@
 #library for displaying data
 require 'vizkit'
+require 'rock/bundle'
 require 'orocos'
 require 'readline'
 
 include Orocos
-Orocos.initialize
 
+# Initialize bundles to find the configurations for the packages
+Bundles.initialize
 
 #load log file
 logfiles_path = ARGV.shift
-logfiles_path = "../../log-6/" if logfiles_path.nil?
+logfiles_path = "../../logs/log-1" if logfiles_path.nil?
 puts(logfiles_path)
 
 log = Orocos::Log::Replay.open(logfiles_path)
 log.use_sample_time = true
-
-system("rm *.log")
-system("rm *.idx")
-system("rm *.txt")
 
 sav = nil
 sai = nil
@@ -33,6 +31,7 @@ Orocos.run 'odometry_fusion::Task' => 'odometry_fusion' do
     inertial_log.connect_to inertial_in, :type => :buffer, :size => 10000
     visual_log.connect_to visual_in, :type => :buffer, :size => 10000
 
+    Orocos.conf.apply(odometry_fusion, ['default'], :override => true)
     odometry_fusion.inertial_delta_pose_in_period = 0.0001
     odometry_fusion.visual_delta_pose_in_period = 0.0001
     odometry_fusion.aggregator_max_latency = 1
@@ -45,20 +44,8 @@ Orocos.run 'odometry_fusion::Task' => 'odometry_fusion' do
 
     log.speed = 1
     sa_reader = odometry_fusion.stream_aligner_status.reader
-    while log.step(true) && log.sample_index <= 200
-        if (sa = sa_reader.read_new)
-            sav = sa.streams[0]
-            sai = sa.streams[1]
-            puts sa.samples_dropped_late_arriving.to_s + " samples dropped (late arriving) " if sa.samples_dropped_late_arriving > 0
-            puts sav.samples_dropped_buffer_full.to_s + " visual samples dropped (buffer full)" if sav.samples_dropped_buffer_full > 0
-            puts sai.samples_dropped_buffer_full.to_s + " inertial samples dropped (buffer full)" if sai.samples_dropped_buffer_full > 0
-            puts sav.samples_dropped_late_arriving.to_s + " visual samples dropped (late arriving)" if sav.samples_dropped_late_arriving > 0
-            puts sai.samples_dropped_late_arriving.to_s + " inertial samples dropped (late arriving)" if sai.samples_dropped_late_arriving > 0
-            puts sav.samples_backward_in_time.to_s + " visual samples dropped (backward in time)" if sav.samples_backward_in_time > 0
-            puts sai.samples_backward_in_time.to_s + " inertial samples dropped (backward in time)" if sai.samples_backward_in_time > 0
-        end
+    while log.step(true) && log.sample_index <= 20
     end
-
     if (sa = sa_reader.read_new)
         sav = sa.streams[0]
         sai = sa.streams[1]
@@ -73,7 +60,7 @@ Orocos.run 'odometry_fusion::Task' => 'odometry_fusion' do
     # log.run
 end
 
-logfile = `ls -v -- odometry_fusion.*.log | tail -1`.delete!("\n")
+logfile = `ls -v -- #{Bundles.log_dir}/odometry_fusion.*.log | tail -1`.delete!("\n")
 samples_received = `pocolog #{logfile} | grep -A1 pose | grep -o -E '[0-9]+ samples'`.delete!("\n")
 puts samples_received + " reached library"
 unless sav.nil?
@@ -84,6 +71,4 @@ unless sav.nil?
 end
 
 system("cp #{logfile} #{logfiles_path}")
-system("rm *.log")
-system("rm *.idx")
-system("rm *.txt")
+system("rm -r #{Bundles.log_dir}")
