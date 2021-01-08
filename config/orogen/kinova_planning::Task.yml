@@ -1,0 +1,26 @@
+--- name:exoter_kinova
+
+# Number of Kinova arm joints
+num_arm_joints: 8  
+
+# Number of gripper parts
+num_gripper: 2
+
+# Vector with the joints final position (defined with MatLab)
+joints_final_position: [3.1416, -1.9635, -1.9635, 0, 1.5708, 3.1416, 0, 0]
+
+# Opened gripper position
+open_gripper_position: [-0.5, -0.5]
+
+# Closed gripper position
+final_gripper_position: [-0.2, -0.2]
+
+#RoCK kinematic model, equal to the joints_final_position but with opposite numbers
+arm_model_initial_config: [-3.1416, 1.9635, 1.9635, 0, -1.5708, -3.1416, 0, 0]
+
+#Vortex model
+arm_real_initial_config: [0,0,0,0,0,0,0,0]
+
+arm_joints_direction: [1,1,1,1,1,1,1,1]
+
+negative_angles: 1 
