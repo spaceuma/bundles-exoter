@@ -1,6 +1,8 @@
 --- name:vortex
+
 is_vector_double: 1
-gain: 1
+
+#gain: 1
 
 position_commands: 0
 
@@ -12,6 +14,7 @@ arm_num_joints: 5
 performing_final_movement: 1 
 
 arm_model_initial_config: [1.570796,0,-2.21,0,0]
+
 arm_real_initial_config: [0,0,0,0,0]
 
 arm_joints_direction: [-1,-1,1,-1,1]
@@ -22,9 +25,12 @@ negative_angles: 0
 
 final_movement_file: '../../../exoter/data/arm_movements/sweep_movement.txt'
 
+
 --- name:exoter
+
 is_vector_double: 0
-gain: 1
+
+#gain: 1
 
 position_commands: 1
 
@@ -36,6 +42,7 @@ arm_num_joints: 5
 performing_final_movement: 1
 
 arm_model_initial_config: [1.570796,0,-2.21,0,0]
+
 arm_real_initial_config: [0,-1.570796,2.21,-1.570796,0]
 
 arm_joints_direction: [-1,-1,-1,1,1]
@@ -48,25 +55,28 @@ final_movement_file: '../../../exoter/data/arm_movements/sweep_movement.txt'
 
 
 --- name:exoter_kinova
+
 is_vector_double: 1
 
 position_commands: 0
 
-m_max_speed: 0.1
+m_max_speed: 0.4
 
-gain: 1
+#gain: 1
 
+# Number of Kinova arm joints
 arm_num_joints: 8
 
-#input type for the final arm position: 1 if it's from a file, 2 if it's from a matrix given by the arm planner
+# Input type for the final arm position: 1 if it's from a file, 2 if it's from a matrix given by the arm planner
 performing_final_movement: 2 
 
-#Kinematic model
+# RoCK kinematic model, equal to the joints_final_position but with opposite numbers
 arm_model_initial_config: [-3.1416, 1.9635, 1.9635, 0, -1.5708, -3.1416, 0, 0]
 
 #Vortex model
 arm_real_initial_config: [0,0,0,0,0,0,0,0]
 
+# Vector with the direction of each arm joint
 arm_joints_direction: [1,1,1,1,1,1,1,1]
 
 smooth_factor: 0.00 # 0 for non smoothing, 0.95 for big smoothing
