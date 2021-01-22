@@ -25,7 +25,7 @@ addrC: "172.16.78.8"
 # Number of active joints (for commanding, NO MANIPULATOR JOINTS)
 num_motors: 16
 
-# Number of passive and active joints (actually, joints_readings size)
+# Number of passive and active joints (actually, joints_readings size, all the joints except manipulator joints)
 num_joints: 19
 
 # Number of manipulator joints
