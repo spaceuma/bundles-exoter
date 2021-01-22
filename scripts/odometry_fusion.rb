@@ -16,7 +16,7 @@ Bundles.transformer.load_conf(tfse_file)
 Orocos.conf.load_dir('/home/user/rock/perception/orogen/spartan/config')
 
 # Setup tasks
-Orocos::Process.run 'groundtruth', 'unit_visual_odometry', 'navigation', 'control', 'loccam', 'unit_odometry', 'spartan::Task' => 'spartan' do
+Orocos::Process.run 'unit_odometry_fusion', 'groundtruth', 'unit_visual_odometry', 'navigation', 'control', 'loccam', 'unit_odometry', 'spartan::Task' => 'spartan' do
 
     ### GROUNDTRUTH + EVALUATION
     ## SETUP VICON
@@ -89,6 +89,29 @@ Orocos::Process.run 'groundtruth', 'unit_visual_odometry', 'navigation', 'contro
     Orocos.conf.apply(imu_stim300, ['default', 'exoter', 'ESTEC', 'stim300_5g'], :override => true)
     imu_stim300.configure
 
+    # Configure odometry_fusion
+    odometry_fusion = Orocos.name_service.get "odometry_fusion"
+    Orocos.conf.apply(odometry_fusion, ['default'], :override => true)
+    odometry_fusion.configure
+
+    # Configure evaluation (these are copies of viso2_evaluation defined in the deployment)
+    visual_evaluation = TaskContext.get 'visual_evaluation'
+    Orocos.conf.apply(visual_evaluation, ['default'], :override => true)
+    visual_evaluation.skip_first_n=1
+    visual_evaluation.align_streams=true
+    visual_evaluation.configure
+
+    inertial_evaluation = TaskContext.get 'inertial_evaluation'
+    Orocos.conf.apply(inertial_evaluation, ['default'], :override => true)
+    inertial_evaluation.align_streams=true
+    inertial_evaluation.skip_first_n=10
+    inertial_evaluation.configure
+
+    fusion_evaluation = TaskContext.get 'fusion_evaluation'
+    Orocos.conf.apply(fusion_evaluation, ['default'], :override => true)
+    fusion_evaluation.align_streams=true
+    fusion_evaluation.skip_first_n=10
+    fusion_evaluation.configure
     
     # Localization
     puts "Setting up localization_frontend"
@@ -101,14 +124,14 @@ Orocos::Process.run 'groundtruth', 'unit_visual_odometry', 'navigation', 'contro
     puts "done"
 
     # ExoTeR Odometry
-    exoter_odometry = Orocos.name_service.get 'threed_odometry'
-    Orocos.conf.apply(exoter_odometry, ['default', 'exoter', 'bessel50'], :override => true)
-    exoter_odometry.urdf_file = Bundles.find_file('data/odometry', 'exoter_odometry_model_complete.urdf')
-    Bundles.transformer.setup(exoter_odometry)
-    exoter_odometry.configure
+    threed_odometry = Orocos.name_service.get 'threed_odometry'
+    Orocos.conf.apply(threed_odometry, ['default', 'exoter', 'bessel50'], :override => true)
+    threed_odometry.urdf_file = Bundles.find_file('data/odometry', 'exoter_odometry_model_complete.urdf')
+    Bundles.transformer.setup(threed_odometry)
+    threed_odometry.configure
     
     # Connections
-    Orocos.log_all_ports
+    Orocos.log_all_ports(exclude_ports: /frame/)
 
     joystick.raw_command.connect_to                       motion_translator.raw_command
 
@@ -143,9 +166,26 @@ Orocos::Process.run 'groundtruth', 'unit_visual_odometry', 'navigation', 'contro
     read_joint_dispatcher.joints_samples.connect_to     localization_frontend.joints_samples
     imu_stim300.orientation_samples_out.connect_to      localization_frontend.orientation_samples
     imu_stim300.compensated_sensors_out.connect_to      localization_frontend.inertial_samples
-    localization_frontend.joints_samples_out.connect_to exoter_odometry.joints_samples
-    localization_frontend.orientation_samples_out.connect_to exoter_odometry.orientation_samples
-    localization_frontend.weighting_samples_out.connect_to exoter_odometry.weighting_samples, :type => :buffer, :size => 200
+    localization_frontend.joints_samples_out.connect_to threed_odometry.joints_samples
+    localization_frontend.orientation_samples_out.connect_to threed_odometry.orientation_samples
+    localization_frontend.weighting_samples_out.connect_to threed_odometry.weighting_samples, :type => :buffer, :size => 200
+
+
+    # Connect odometry fusion
+    threed_odometry.delta_pose_samples_out.connect_to \
+        odometry_fusion.inertial_delta_pose_in, :type => :buffer, :size => 10000
+    spartan.delta_vo_out.connect_to \
+        odometry_fusion.visual_delta_pose_in, :type => :buffer, :size => 10000
+
+    # Connect evaluation
+    vicon.pose_samples.connect_to visual_evaluation.groundtruth_pose
+    spartan.vo_out.connect_to visual_evaluation.odometry_pose
+
+    vicon.pose_samples.connect_to inertial_evaluation.groundtruth_pose
+    threed_odometry.pose_samples_out.connect_to inertial_evaluation.odometry_pose
+
+    vicon.pose_samples.connect_to fusion_evaluation.groundtruth_pose
+    odometry_fusion.pose_out.connect_to fusion_evaluation.odometry_pose
 
     ##############################
 
@@ -165,14 +205,21 @@ Orocos::Process.run 'groundtruth', 'unit_visual_odometry', 'navigation', 'contro
     camera_firewire_loccam.start
     imu_stim300.start
     localization_frontend.start
-    exoter_odometry.start
+    threed_odometry.start
     spartan.start
 
-    ### GROUNDTRUTH
+    odometry_fusion.start
+
+    ### GROUNDTRUTH + EVAL
     vicon.start
+    visual_evaluation.start
+    inertial_evaluation.start
+    fusion_evaluation.start
     ############################
 
 
-    Readline::readline('Press <ENTER> to quit...');
+    Readline::readline('Press <ENTER> to quit...') do
+        exit
+    end
 
 end
