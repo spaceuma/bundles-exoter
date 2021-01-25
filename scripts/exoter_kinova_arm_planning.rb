@@ -61,6 +61,7 @@ Orocos.run 'navigation', 'control', 'simulation', 'vortex::Task' => 'vortex', 'p
     # Kinova planning outputs
     kinova_planning.num_waypoints_port.connect_to                    coupled_control.size_path 
     kinova_planning.modified_trajectory_port.connect_to              waypoint_navigation.trajectory
+    kinova_planning.modified_trajectory_port.connect_to              coupled_control.trajectory
     kinova_planning.joints_motionplanning_matrix_port.connect_to     coupled_control.arm_profile
     kinova_planning.fetching_motionplanning_matrix_port.connect_to   coupled_control.final_movement_matrix_port
     kinova_planning.final_movement_port.connect_to                   coupled_control.kinova_final_movement_port
