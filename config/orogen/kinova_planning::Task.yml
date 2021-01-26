@@ -9,8 +9,12 @@ num_gripper: 2
 # Number of waypoints to perform last movement
 last_movement_waypoints: 5 
 
-# Vector with the joints final position (defined with MatLab)
+# Vector with the joints final position (defined with MatLab): the first link position 
+#is "pi" to make the arm go downwards to fetch the sample on the ground (in fact, putting 
+#a 0 there would make the arm go upwards)
 joints_final_position: [3.1416, -1.9635, -1.9635, 0, 1.5708, 3.1416, 0, 0]
+# For the arm deployment (while the rover is moving, before pausing near to the sample to fetch it):
+#joints_final_position: [3.1416, 0, 0, 0, 0, 0, 0, 0]
 
 # Opened gripper position
 open_gripper_position: [-0.8, -0.8]
