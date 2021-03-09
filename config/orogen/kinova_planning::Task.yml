@@ -62,3 +62,67 @@ x_distance_roverCentre_armBase: 0.207
 # Vector with the Y distance between the arm base and the rover centre
 y_distance_roverCentre_armBase:  -0.149
 
+
+--- name:unreal_exoter_kinova
+
+# Number of Kinova arm joints
+num_arm_joints: 8  
+
+# Number of gripper parts
+num_gripper: 2
+
+# Number of waypoints to perform last movement
+last_movement_waypoints: 5 
+
+# Vector with the joints final position (defined with MatLab): the first link position 
+#is "pi" to make the arm go downwards to fetch the sample on the ground (in fact, putting 
+#a 0 there would make the arm go upwards)
+joints_final_position: [3.1416, -1.9635, -1.9635, 0, 1.5708, 3.1416, 0, 0]
+# For the arm deployment (while the rover is moving, before pausing near to the sample to fetch it):
+#joints_final_position: [3.1416, 0, 0, 0, 0, 0, 0, 0]
+
+# Opened gripper position
+open_gripper_position: [-0.8, -0.8]
+
+# Closed gripper position
+final_gripper_position: [0.15, 0.15]
+
+#RoCK kinematic model, equal to the joints_final_position but with opposite numbers
+arm_model_initial_config: [-3.1416, 1.9635, 1.9635, 0, -1.5708, -3.1416, 0, 0]
+
+#Vortex model
+arm_real_initial_config: [0,0,0,0,0,0,0,0]
+
+# Vector with the direction of each arm joint
+arm_joints_direction: [1,1,1,1,1,1,1,1]
+
+# Value to define if there are negative angles (related with the arm joints directions)
+negative_angles: 1 
+
+# Distance between rover arm and ground
+arm_ground_distance: 0.10
+
+# Distance between rover body and ground (the Vortex one is 0.279)
+body_ground_distance: 0.35
+
+# Vector with the arm base position
+arm_base_position: [-0.02700027, 0.12126709, 0.1961026]
+
+# Vector with the rover body position
+rover_body_position: [-0.22999599,0.2701704, 0.2685]
+
+# Vector with the arm base orientation
+arm_base_orientation: [0, 1.570796327, 0]
+
+# Vector with the rover body orientation
+rover_body_orientation: [0, 0, 0]
+
+# Vector with the length of each arm joint: [ (128.3 / 2) * pow(10, -3), (115 / 2) * pow(10, -3), (280 / 2) * pow(10, -3), (140 / 2) * pow(10, -3), (105 / 2) * pow(10, -3), (105 / 2) * pow(10, -3), (130 / 2) * pow(10, -3)]
+linksLength: [0.0642, 0.0575, 0.14, 0.07, 0.0525, 0.0525, 0.065]
+
+# Vector with the X distance between the arm base and the rover centre
+x_distance_roverCentre_armBase: 0.2070 
+
+# Vector with the Y distance between the arm base and the rover centre
+y_distance_roverCentre_armBase: -0.1490 
+
