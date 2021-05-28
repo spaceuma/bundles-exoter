@@ -76,11 +76,11 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
 
     gps = TaskContext.get 'gps'
     Orocos.conf.apply(gps, ['exoter', 'Spain', 'default'], :override => true)
-    #gps.configure
+    gps.configure
     
     gps_heading = TaskContext.get 'gps_heading'
     Orocos.conf.apply(gps_heading, ['default'], :override => true)
-    #gps_heading.configure
+    gps_heading.configure
 
     puts "Starting NavCam"
 
@@ -211,8 +211,8 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     #visual_odometry.start
     #viso2_with_imu.start
     #viso2_evaluation.start
-    #gps.start
-    #gps_heading.start
+    gps.start
+    gps_heading.start
 
     camera_loccam.start
     camera_firewire_loccam.start
