@@ -1,0 +1,36 @@
+--- name:exoter_kinova
+
+# Number of active joints (for commanding, NO MANIPULATOR JOINTS): data that will be sent to Vortex
+num_motors: 16
+
+# Number of passive and active joints (actually, joints_readings size, all the joints except manipulator joints): joints data that will be received from Vortex
+num_joints: 19
+
+# Number of manipulator joints, number of arm joints data that will be received from Vortex 
+manipulator_num_joints: 8
+
+# Number of position coordenates
+n_pose: 3
+
+# Number of orientation coordinates
+n_orientation: 3
+
+# Numbrer of data to define the goal waypoint
+n_goal_waypoint: 6
+
+# UDP ports to read data from Vortex
+vortex_port_c: 8081
+
+vortex_port_s: 8080
+
+# UDP ports to read the rover coordinates from Unreal
+unreal_port_rover: 3001
+
+# UDP ports to read the sample coordinates from Unreal
+unreal_port_sample: 3003
+
+# Remote address (Virtual Machine)
+addr_s: "172.16.78.80"
+
+# Local address (Windows)
+addr_c: "172.16.78.8"
