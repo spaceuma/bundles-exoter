@@ -64,15 +64,15 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     visual_odometry = TaskContext.get 'viso2'
     Orocos.conf.apply(visual_odometry, ['default','bumblebee'], :override => true)
     Bundles.transformer.setup(visual_odometry)
-    #visual_odometry.configure
+    visual_odometry.configure
 
     viso2_with_imu = TaskContext.get 'viso2_with_imu'
     Orocos.conf.apply(viso2_with_imu, ['default'], :override => true)
-    #viso2_with_imu.configure
+    viso2_with_imu.configure
 
     viso2_evaluation = TaskContext.get 'viso2_evaluation'
     Orocos.conf.apply(viso2_evaluation, ['default'], :override => true)
-    #viso2_evaluation.configure
+    viso2_evaluation.configure
 
     gps = TaskContext.get 'gps'
     Orocos.conf.apply(gps, ['exoter', 'Spain', 'default'], :override => true)
@@ -197,6 +197,8 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     logger_viso2.file = "viso2.log"
     logger_viso2.log(viso2_with_imu.pose_samples_out)
     logger_viso2.log(visual_odometry.delta_pose_samples_out)
+    logger_viso2.log(diff_pose)
+    logger_viso2.log(odometry_in_world_pose)
 
     # Start the components
     platform_driver.start
@@ -208,9 +210,9 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     joystick.start
     imu_stim300.start
 
-    #visual_odometry.start
-    #viso2_with_imu.start
-    #viso2_evaluation.start
+    visual_odometry.start
+    viso2_with_imu.start
+    viso2_evaluation.start
     gps.start
     gps_heading.start
 
