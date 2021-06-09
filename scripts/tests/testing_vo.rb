@@ -75,7 +75,7 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     viso2_evaluation.configure
 
     gps = TaskContext.get 'gps'
-    Orocos.conf.apply(gps, ['exoter', 'Spain', 'default'], :override => true)
+    Orocos.conf.apply(gps, ['exoter', 'Spain', 'Malaga'], :override => true)
     gps.configure
     
     gps_heading = TaskContext.get 'gps_heading'
@@ -197,8 +197,8 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     logger_viso2.file = "viso2.log"
     logger_viso2.log(viso2_with_imu.pose_samples_out)
     logger_viso2.log(visual_odometry.delta_pose_samples_out)
-    logger_viso2.log(diff_pose)
-    logger_viso2.log(odometry_in_world_pose)
+    logger_viso2.log(viso2_evaluation.diff_pose)
+    logger_viso2.log(viso2_evaluation.odometry_in_world_pose)
 
     # Start the components
     platform_driver.start
