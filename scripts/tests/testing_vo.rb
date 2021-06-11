@@ -202,6 +202,7 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     logger_viso2.log(viso2_evaluation.odometry_in_world_pose)
     logger_viso2.log(viso2_evaluation.ground_truth_pose)
     logger_viso2.log(viso2_evaluation.travelled_distance)
+    logger_viso2.log(viso2_evaluation.perc_error)
 
     # Start the components
     platform_driver.start
