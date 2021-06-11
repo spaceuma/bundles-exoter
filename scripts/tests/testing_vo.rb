@@ -152,8 +152,9 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     motion_translator.motion_command.connect_to         visual_odometry.motion_command
     visual_odometry.delta_pose_samples_out.connect_to   viso2_with_imu.delta_pose_samples_in
     imu_stim300.orientation_samples_out.connect_to      viso2_with_imu.pose_samples_imu
+#    imu_stim300.orientation_samples_out.connect_to      viso2_with_imu.pose_samples_imu_extra
 
-    gps.pose_samples.connect_to                         viso2_evaluation.groundtruth_pose
+    gps_heading.pose_samples_out.connect_to             viso2_evaluation.groundtruth_pose
     viso2_with_imu.pose_samples_out.connect_to          viso2_evaluation.odometry_pose
 
     gps.pose_samples.connect_to                         gps_heading.gps_pose_samples
@@ -199,6 +200,8 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     logger_viso2.log(visual_odometry.delta_pose_samples_out)
     logger_viso2.log(viso2_evaluation.diff_pose)
     logger_viso2.log(viso2_evaluation.odometry_in_world_pose)
+    logger_viso2.log(viso2_evaluation.ground_truth_pose)
+    logger_viso2.log(viso2_evaluation.travelled_distance)
 
     # Start the components
     platform_driver.start
@@ -210,12 +213,6 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     joystick.start
     imu_stim300.start
 
-    visual_odometry.start
-    viso2_with_imu.start
-    viso2_evaluation.start
-    gps.start
-    gps_heading.start
-
     camera_loccam.start
     camera_firewire_loccam.start
     stereo_loccam.start
@@ -225,6 +222,18 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     camera_firewire_navcam.start
     stereo_navcam.start
     shutter_controller_navcam.start
+
+    gps.start
+    gps_heading.start
+    puts "Move rover forward to initialise the gps_heading component"
+    while gps_heading.ready == false
+        sleep 1
+    end
+    puts "GPS heading calibration done"
+
+    visual_odometry.start
+    viso2_with_imu.start
+    viso2_evaluation.start
 
     logger_gps.start
     logger_imu.start
