@@ -14,7 +14,10 @@ Bundles.initialize
 ## Transformation for the transformer
 Bundles.transformer.load_conf(Bundles.find_file('config', 'transforms_scripts_exoter.rb'))
 
-Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'unit_visual_odometry', 'gps', 'imu', 'unit_bb2', 'shutter_controller', 'path_planning::Task' => 'path_planning', 'mission_control::Task' => 'mission_control', 'coupled_control::Task' => 'coupled_control' do
+Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 'loccam',
+ 'unit_visual_odometry', 'gps', 'imu', 'unit_bb2', 'shutter_controller',
+  'path_planning::Task' => 'path_planning', 'mission_control::Task' => 'mission_control', 
+  'coupled_control::Task' => 'coupled_control' do
 
     # Configure
     joystick = Orocos.name_service.get 'joystick'
@@ -179,7 +182,8 @@ Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'u
     mission_control.goal_waypoint_output.connect_to                  path_planning.goalWaypoint
 
     # Waypoint navigation outputs
-    waypoint_navigation.motion_command.connect_to                    coupled_control.motion_command
+    #waypoint_navigation.motion_command.connect_to                    coupled_control.motion_command
+    waypoint_navigation.motion_command.connect_to                    command_arbiter.follower_motion_command
     waypoint_navigation.current_segment.connect_to                   coupled_control.current_segment
     waypoint_navigation.currentWaypoint.connect_to                   coupled_control.current_waypoint
     waypoint_navigation.trajectory_status.connect_to                 mission_control.trajectory_status_port
@@ -203,8 +207,9 @@ Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'u
 
     coupled_control.modified_motion_command.connect_to    command_arbiter.follower_motion_command
     motion_translator.motion_command.connect_to           command_arbiter.joystick_motion_command
-    motion_translator.motion_command.connect_to         locomotion_control.motion_command
+#    motion_translator.motion_command.connect_to         locomotion_control.motion_command
     command_arbiter.motion_command.connect_to           locomotion_control.motion_command
+    command_arbiter.motion_command.connect_to           gps_heading.motion_command
 
     joystick.raw_command.connect_to                       motion_translator.raw_command
     joystick.raw_command.connect_to                       command_arbiter.raw_command
@@ -330,13 +335,15 @@ Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'u
     # Waiting one second to make sure all data from Vortex has been received
     sleep(1)
 
-    mission_control.start
+
     coupled_control.start
-    path_planning.start
     waypoint_navigation.start
+    path_planning.start
+    mission_control.start
 
 
 
     Readline::readline("Press ENTER to exit\n")
 
 end
+
