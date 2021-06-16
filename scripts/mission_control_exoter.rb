@@ -14,21 +14,16 @@ Bundles.initialize
 ## Transformation for the transformer
 Bundles.transformer.load_conf(Bundles.find_file('config', 'transforms_scripts_exoter.rb'))
 
-Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'unit_visual_odometry', 'gps', 'imu', 'unit_bb2', 'shutter_controller','motion_planning::Task' => 'motion_planning', 'path_planning::Task' => 'path_planning', 'mission_control::Task' => 'mission_control', 'coupled_control::Task' => 'coupled_control' do
+Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'unit_visual_odometry', 'gps', 'imu', 'unit_bb2', 'shutter_controller', 'path_planning::Task' => 'path_planning', 'mission_control::Task' => 'mission_control', 'coupled_control::Task' => 'coupled_control' do
 
+    # Configure
     joystick = Orocos.name_service.get 'joystick'
-    # Set the joystick input
-    joystick.device = "/dev/input/js0"
-    # In case the dongle is not connected exit gracefully
+    Orocos.conf.apply(joystick, ['default', 'logitech_gamepad'], :override => true)
     begin
-        # Configure the joystick
-        Orocos.conf.apply(joystick, ['default', 'logitech_gamepad'], :override => true)
         joystick.configure
     rescue
-        # Abort the process as there is no joystick to get input from
         abort("Cannot configure the joystick, is the dongle connected to ExoTeR?")
     end
-
 
     # setup locomotion_control
     puts "Setting up locomotion_control"
@@ -81,10 +76,6 @@ Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'u
     command_joint_dispatcher.configure
     puts "done"
 
-    locomotion_switcher = Orocos.name_service.get 'locomotion_switcher'
-    Orocos.conf.apply(locomotion_switcher, ['default'], :override => true)
-    locomotion_switcher.configure
-
     ptu_control = Orocos.name_service.get 'ptu_control'
     Orocos.conf.apply(ptu_control, ['default'], :override => true)
     ptu_control.configure
@@ -103,13 +94,6 @@ Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'u
     motion_translator = Orocos.name_service.get 'motion_translator'
     Orocos.conf.apply(motion_translator, ['exoter'], :override => true)
     motion_translator.configure
-
-  	# setup motion_planning
-    puts "Setting up motion planning"
-    motion_planning = Orocos.name_service.get 'motion_planning'
-    Orocos.conf.apply(motion_planning, ['default'], :override => true)
-    motion_planning.configure
-    puts "done"
 
     imu_stim300 = TaskContext.get 'imu_stim300'
     Orocos.conf.apply(imu_stim300, ['default', 'exoter', 'Malaga', 'stim300_10g_exoter'], :override => true)
@@ -204,21 +188,12 @@ Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'u
     coupled_control.modified_motion_command.connect_to               locomotion_control.motion_command
 
     # Read joint dispatcher
-    read_joint_dispatcher.joints_samples.connect_to       locomotion_switcher.joints_readings
-    read_joint_dispatcher.motors_samples.connect_to       locomotion_switcher.motors_readings
     read_joint_dispatcher.motors_samples.connect_to       locomotion_control.joints_readings
     read_joint_dispatcher.arm_samples.connect_to          coupled_control.current_config
     read_joint_dispatcher.ptu_samples.connect_to          ptu_control.ptu_samples
 
     platform_driver.joints_readings.connect_to            read_joint_dispatcher.joints_readings
 
-    command_arbiter.motion_command.connect_to             locomotion_switcher.motion_command
-    command_arbiter.locomotion_mode.connect_to            locomotion_switcher.locomotion_mode_override
-
-    locomotion_switcher.lc_motion_command.connect_to      locomotion_control.motion_command
-    locomotion_switcher.joints_commands.connect_to        command_joint_dispatcher.joints_commands
-
-    locomotion_control.joints_commands.connect_to         locomotion_switcher.lc_joints_commands
     locomotion_control.joints_commands.connect_to       command_joint_dispatcher.joints_commands
 
     motion_translator.ptu_command.connect_to              ptu_control.ptu_joints_commands
@@ -226,19 +201,13 @@ Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'u
 
     command_joint_dispatcher.motors_commands.connect_to   platform_driver.joints_commands
 
-    joystick.raw_command.connect_to                       command_arbiter.raw_command
     coupled_control.modified_motion_command.connect_to    command_arbiter.follower_motion_command
     motion_translator.motion_command.connect_to           command_arbiter.joystick_motion_command
     motion_translator.motion_command.connect_to         locomotion_control.motion_command
+    command_arbiter.motion_command.connect_to           locomotion_control.motion_command
 
     joystick.raw_command.connect_to                       motion_translator.raw_command
     joystick.raw_command.connect_to                       command_arbiter.raw_command
-
-    # Motion planning outputs
-	motion_planning.roverPath.connect_to                  waypoint_navigation.trajectory
-	motion_planning.joints.connect_to                     coupled_control.manipulator_config
-	motion_planning.assignment.connect_to                 coupled_control.assignment
-	motion_planning.sizePath.connect_to                   coupled_control.size_path
 
 	# Coupled control outputs
     coupled_control.modified_motion_command.connect_to    command_arbiter.follower_motion_command
@@ -327,16 +296,6 @@ Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'u
     joystick.start
     imu_stim300.start
 
-	motion_planning.start
-    command_arbiter.start
-    locomotion_switcher.start
-
-    #visual_odometry.start
-    #viso2_with_imu.start
-    #viso2_evaluation.start
-    gps.start
-    gps_heading.start
-
     camera_loccam.start
     camera_firewire_loccam.start
     stereo_loccam.start
@@ -346,6 +305,20 @@ Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'u
     camera_firewire_navcam.start
     stereo_navcam.start
     shutter_controller_navcam.start
+
+    command_arbiter.start
+
+    gps.start
+    gps_heading.start
+    puts "Move rover forward to initialise the gps_heading component"
+    while gps_heading.ready == false
+        sleep 1
+    end
+    puts "GPS heading calibration done"
+
+    visual_odometry.start
+    viso2_with_imu.start
+    viso2_evaluation.start
 
     logger_gps.start
     logger_imu.start
@@ -361,13 +334,7 @@ Orocos::Process.run 'navigation', 'control', 'simulation','navcam', 'loccam', 'u
     coupled_control.start
     path_planning.start
     waypoint_navigation.start
-    locomotion_control.start
 
-
-    Readline::readline("Press Enter to exit\n") do
-    end
-    ptu_control.stop
-    sleep(7)
 
 
     Readline::readline("Press ENTER to exit\n")
