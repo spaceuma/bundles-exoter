@@ -79,7 +79,7 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     gps.configure
     
     gps_heading = TaskContext.get 'gps_heading'
-    Orocos.conf.apply(gps_heading, ['default'], :override => true)
+    Orocos.conf.apply(gps_heading, ['exoter'], :override => true)
     gps_heading.configure
 
     puts "Starting NavCam"

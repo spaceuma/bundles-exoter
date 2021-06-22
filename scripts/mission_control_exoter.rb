@@ -21,8 +21,9 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
 
     # Configure
     joystick = Orocos.name_service.get 'joystick'
-    Orocos.conf.apply(joystick, ['default', 'logitech_gamepad'], :override => true)
+    joystick.device = "/dev/input/js0"
     begin
+        Orocos.conf.apply(joystick, ['default', 'logitech_gamepad'], :override => true)
         joystick.configure
     rescue
         abort("Cannot configure the joystick, is the dongle connected to ExoTeR?")
@@ -313,6 +314,10 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
 
     command_arbiter.start
 
+    coupled_control.start
+    waypoint_navigation.start
+    path_planning.start
+
     gps.start
     gps_heading.start
     puts "Move rover forward to initialise the gps_heading component"
@@ -336,9 +341,6 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     sleep(1)
 
 
-    coupled_control.start
-    waypoint_navigation.start
-    path_planning.start
     mission_control.start
 
 

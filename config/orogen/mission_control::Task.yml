@@ -69,7 +69,10 @@ roverBody_armBase_position: [0.20299329, -0.14890331, -0.0723974]
 roverBody_armBase_orientation: [0, 1.570796327, -3.141592654]
 
 # Vector with the length of each arm joint: [ (128.3 / 2) * pow(10, -3), (115 / 2) * pow(10, -3), (280 / 2) * pow(10, -3), (140 / 2) * pow(10, -3), (105 / 2) * pow(10, -3), (105 / 2) * pow(10, -3), (130 / 2) * pow(10, -3)]
-linksLength: [0.0642, 0.0575, 0.14, 0.07, 0.0525, 0.0525, 0.065]
+kinova_linksLength: [0.0642, 0.0575, 0.14, 0.07, 0.0525, 0.0525, 0.065]
+
+ExoTeR_linksLength: [0.0642, 0.0575, 0.14, 0.07, 0.0525, 0.0525, 0.065]
+
 
 # Vector with the X distance between the arm base and the rover centre
 x_distance_roverCentre_armBase: 0.207

@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
-require 'vizkit'
+require 'orocos'
 require 'rock/bundle'
 require 'readline'
-require 'orocos'
 require 'optparse'
+require 'vizkit'
 
 include Orocos
 
