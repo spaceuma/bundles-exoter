@@ -91,6 +91,18 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     platform_driver.configure
     puts "done"
 
+    writer = platform_driver.joints_commands.writer
+
+    joint_names = ["WHEEL_DRIVE_FL", "WHEEL_DRIVE_FR", "WHEEL_DRIVE_CL", "WHEEL_DRIVE_CR", "WHEEL_DRIVE_BL", "WHEEL_DRIVE_BR", "WHEEL_STEER_FL", "WHEEL_STEER_FR", "WHEEL_STEER_BL", "WHEEL_STEER_BR", "WHEEL_WALK_FL", "WHEEL_WALK_FR", "WHEEL_WALK_CL", "WHEEL_WALK_CR", "WHEEL_WALK_BL", "WHEEL_WALK_BR", "MAST_PAN", "MAST_TILT", "ARM_JOINT_1", "ARM_JOINT_2", "ARM_JOINT_3", "ARM_JOINT_4", "ARM_JOINT_5"]
+
+    init_element = Types.base.JointState.new(
+                        position: Float::NAN,
+                        speed: Float::NAN,
+                        effort: Float::NAN,
+                        acceleration: Float::NAN)
+
+    joint_elements = Array.new(23, init_element)
+
     command_arbiter = Orocos.name_service.get 'command_arbiter'
     Orocos.conf.apply(command_arbiter, ['default'], :override => true)
     command_arbiter.configure
@@ -131,11 +143,13 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     camera_firewire_navcam.configure
 
     camera_navcam = TaskContext.get 'camera_navcam'
-    Orocos.conf.apply(camera_navcam, ['exoter_bb2','udp_communication_navcam'], :override => true)
+#    Orocos.conf.apply(camera_navcam, ['exoter_bb2','udp_communication_navcam'], :override => true)
+    Orocos.conf.apply(camera_navcam, ['exoter_bb2'], :override => true)
     camera_navcam.configure
 
     stereo_navcam = TaskContext.get 'stereo_navcam'
-    Orocos.conf.apply(stereo_navcam, ['exoter_bb2','udp_communication_navcam'], :override => true)
+#    Orocos.conf.apply(stereo_navcam, ['exoter_bb2','udp_communication_navcam'], :override => true)
+    Orocos.conf.apply(stereo_navcam, ['exoter_bb2'], :override => true)
     stereo_navcam.configure
 
     shutter_controller_navcam = TaskContext.get 'shutter_controller_navcam'
@@ -149,11 +163,13 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     camera_firewire_loccam.configure
 
     camera_loccam = TaskContext.get 'camera_loccam'
-    Orocos.conf.apply(camera_loccam, ['hdpr_bb2','udp_communication_loccam'], :override => true)
+#    Orocos.conf.apply(camera_loccam, ['hdpr_bb2','udp_communication_loccam'], :override => true)
+    Orocos.conf.apply(camera_loccam, ['hdpr_bb2'], :override => true)
     camera_loccam.configure
 
     stereo_loccam = TaskContext.get 'stereo_bb2'
-    Orocos.conf.apply(stereo_loccam, ['hdpr_bb2','udp_communication_loccam'], :override => true)
+#    Orocos.conf.apply(stereo_loccam, ['hdpr_bb2','udp_communication_loccam'], :override => true)
+    Orocos.conf.apply(stereo_loccam, ['hdpr_bb2'], :override => true)
     stereo_loccam.configure
 
     shutter_controller_loccam = TaskContext.get 'shutter_controller_bb2'
@@ -293,6 +309,7 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     logger_viso2.log(viso2_evaluation.perc_error)
 
     # Start the components
+    command_arbiter.start
     platform_driver.start
     read_joint_dispatcher.start
     command_joint_dispatcher.start
@@ -312,11 +329,18 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     stereo_navcam.start
     shutter_controller_navcam.start
 
-    command_arbiter.start
-
     coupled_control.start
     waypoint_navigation.start
     path_planning.start
+
+    joint_elements[17] = Types.base.JointState.Position(0.5236)
+
+    command = Types.base.commands.Joints.new(
+                time: Time.at(0),
+                names: joint_names,
+                elements: joint_elements)
+
+    writer.write(command)
 
     gps.start
     gps_heading.start
@@ -335,7 +359,6 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     logger_loccam.start
     logger_navcam.start
     logger_viso2.start    
-
 
     # Waiting one second to make sure all data from Vortex has been received
     sleep(1)

@@ -89,11 +89,11 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     camera_firewire_navcam.configure
 
     camera_navcam = TaskContext.get 'camera_navcam'
-    Orocos.conf.apply(camera_navcam, ['exoter_bb2'], :override => true)
+    Orocos.conf.apply(camera_navcam, ['exoter_bb2','udp_communication_navcam'], :override => true)
     camera_navcam.configure
 
     stereo_navcam = TaskContext.get 'stereo_navcam'
-    Orocos.conf.apply(stereo_navcam, ['exoter_bb2'], :override => true)
+    Orocos.conf.apply(stereo_navcam, ['exoter_bb2','udp_communication_navcam'], :override => true)
     stereo_navcam.configure
 
     shutter_controller_navcam = TaskContext.get 'shutter_controller_navcam'
@@ -107,11 +107,11 @@ Orocos::Process.run 'control', 'navcam', 'loccam', 'navigation', 'unit_visual_od
     camera_firewire_loccam.configure
 
     camera_loccam = TaskContext.get 'camera_loccam'
-    Orocos.conf.apply(camera_loccam, ['hdpr_bb2'], :override => true)
+    Orocos.conf.apply(camera_loccam, ['hdpr_bb2','udp_communication_loccam'], :override => true)
     camera_loccam.configure
 
     stereo_loccam = TaskContext.get 'stereo_bb2'
-    Orocos.conf.apply(stereo_loccam, ['hdpr_bb2'], :override => true)
+    Orocos.conf.apply(stereo_loccam, ['hdpr_bb2','udp_communication_loccam'], :override => true)
     stereo_loccam.configure
 
     shutter_controller_loccam = TaskContext.get 'shutter_controller_bb2'

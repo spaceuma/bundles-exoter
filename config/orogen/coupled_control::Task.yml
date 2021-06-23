@@ -89,9 +89,9 @@ negative_angles: 1
 # is_vector_double set to 0 because is not a double 
 is_vector_double: 0
 
-position_commands: 0
+position_commands: 1
 
-m_max_speed: 0.4
+m_max_speed: 0.01
 
 #gain: 1
 
@@ -105,7 +105,7 @@ performing_final_movement: 2
 arm_model_initial_config: [-1.0, -1.5708, 2.21, 0, 0]
 
 #Joints initial position
-joints_initial_config: [1 1.5708 -2.21 0 0]
+joints_initial_config: [1, 1.5708, -2.21, 0, 0]
 
 #Vortex model
 arm_real_initial_config: [0,0,0,0,0]
@@ -113,6 +113,6 @@ arm_real_initial_config: [0,0,0,0,0]
 # Vector with the direction of each arm joint
 arm_joints_direction: [1,1,1,1,1]
 
-smooth_factor: 0.00 # 0 for non smoothing, 0.95 for big smoothing
+smooth_factor: 0.95 # 0 for non smoothing, 0.95 for big smoothing
 
 negative_angles: 1 
