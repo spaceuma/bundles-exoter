@@ -233,9 +233,12 @@ num_gripper: 2
 last_movement_waypoints: 5 
 
 #Joints final position, elbow up:
-joints_final_position: [-1.5708, -1.6422, 1.459, 0.6, 0]
+joints_final_position: [1 1.5708 -2.21 0 0]
 #Joints final position, elbow down:
 #joints_final_position: [-1.5708, -0.6721, -0.5, -0.3456, 0]
+
+#Joints initial position
+#joints_initial_pos : [1 1.5708 -2.21 0 0]
 
 # Opened gripper position
 open_gripper_position: [-0.8, -0.8]
@@ -244,7 +247,7 @@ open_gripper_position: [-0.8, -0.8]
 final_gripper_position: [0.15, 0.15]
 
 #RoCK kinematic model, equal to the joints_final_position but with opposite numbers
-arm_model_initial_config: [1.5708, 0, -2.21, 0, 0]
+arm_model_initial_config: [-1.0, -1.5708, 2.21, 0, 0]
 
 #Vortex model
 arm_real_initial_config: [0,0,0,0,0]

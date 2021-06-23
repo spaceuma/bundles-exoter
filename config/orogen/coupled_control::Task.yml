@@ -102,7 +102,10 @@ arm_num_joints: 5
 performing_final_movement: 2 
 
 # RoCK kinematic model, equal to the joints_final_position but with opposite numbers
-arm_model_initial_config: [1.5708, 0, -2.21, 0, 0]
+arm_model_initial_config: [-1.0, -1.5708, 2.21, 0, 0]
+
+#Joints initial position
+joints_initial_config: [1 1.5708 -2.21 0 0]
 
 #Vortex model
 arm_real_initial_config: [0,0,0,0,0]
