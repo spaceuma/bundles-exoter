@@ -143,12 +143,10 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     camera_firewire_navcam.configure
 
     camera_navcam = TaskContext.get 'camera_navcam'
-#    Orocos.conf.apply(camera_navcam, ['exoter_bb2','udp_communication_navcam'], :override => true)
     Orocos.conf.apply(camera_navcam, ['exoter_bb2'], :override => true)
     camera_navcam.configure
 
     stereo_navcam = TaskContext.get 'stereo_navcam'
-#    Orocos.conf.apply(stereo_navcam, ['exoter_bb2','udp_communication_navcam'], :override => true)
     Orocos.conf.apply(stereo_navcam, ['exoter_bb2'], :override => true)
     stereo_navcam.configure
 
@@ -163,12 +161,10 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     camera_firewire_loccam.configure
 
     camera_loccam = TaskContext.get 'camera_loccam'
-#    Orocos.conf.apply(camera_loccam, ['hdpr_bb2','udp_communication_loccam'], :override => true)
     Orocos.conf.apply(camera_loccam, ['hdpr_bb2'], :override => true)
     camera_loccam.configure
 
     stereo_loccam = TaskContext.get 'stereo_bb2'
-#    Orocos.conf.apply(stereo_loccam, ['hdpr_bb2','udp_communication_loccam'], :override => true)
     Orocos.conf.apply(stereo_loccam, ['hdpr_bb2'], :override => true)
     stereo_loccam.configure
 
