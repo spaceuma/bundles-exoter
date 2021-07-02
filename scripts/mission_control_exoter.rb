@@ -48,7 +48,7 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     puts "Setting up path planning"
     path_planning = Orocos.name_service.get 'path_planning'
     path_planning.keep_old_waypoints = true
-    Orocos.conf.apply(path_planning, ['exoter', 'exoter_rover'], :override => true)
+    Orocos.conf.apply(path_planning, ['exoter_rover'], :override => true)
     path_planning.configure
     puts "done"
 
@@ -118,22 +118,22 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     visual_odometry = TaskContext.get 'viso2'
     Orocos.conf.apply(visual_odometry, ['default','bumblebee'], :override => true)
     Bundles.transformer.setup(visual_odometry)
-    #visual_odometry.configure
+    visual_odometry.configure
 
     viso2_with_imu = TaskContext.get 'viso2_with_imu'
     Orocos.conf.apply(viso2_with_imu, ['default'], :override => true)
-    #viso2_with_imu.configure
+    viso2_with_imu.configure
 
     viso2_evaluation = TaskContext.get 'viso2_evaluation'
     Orocos.conf.apply(viso2_evaluation, ['default'], :override => true)
-    #viso2_evaluation.configure
+    viso2_evaluation.configure
 
     gps = TaskContext.get 'gps'
-    Orocos.conf.apply(gps, ['exoter', 'Spain', 'default'], :override => true)
+    Orocos.conf.apply(gps, ['exoter', 'Spain', 'Malaga'], :override => true)
     gps.configure
     
     gps_heading = TaskContext.get 'gps_heading'
-    Orocos.conf.apply(gps_heading, ['default'], :override => true)
+    Orocos.conf.apply(gps_heading, ['exoter'], :override => true)
     gps_heading.configure
 
     puts "Starting NavCam"
