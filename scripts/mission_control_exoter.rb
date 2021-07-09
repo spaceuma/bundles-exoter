@@ -186,6 +186,7 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     mission_control.joints_motionplanning_matrix_port.connect_to     coupled_control.arm_profile
     mission_control.fetching_motionplanning_matrix_port.connect_to   coupled_control.final_movement_matrix_port
     mission_control.final_movement_port.connect_to                   coupled_control.kinova_final_movement_port
+    mission_control.start_movement.connect_to                        coupled_control.start_movement
 
     viso2_evaluation.odometry_in_world_pose.connect_to               waypoint_navigation.pose
     viso2_evaluation.odometry_in_world_pose.connect_to               coupled_control.pose
@@ -203,6 +204,7 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
 
     # Coupled control outputs
     coupled_control.modified_motion_command.connect_to               locomotion_control.motion_command
+    coupled_control.movement_finished.connect_to               mission_control.movement_finished
 
     # Read joint dispatcher
     read_joint_dispatcher.motors_samples.connect_to       locomotion_control.joints_readings
@@ -304,6 +306,9 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     logger_viso2.log(viso2_evaluation.travelled_distance)
     logger_viso2.log(viso2_evaluation.perc_error)
 
+    path_planning.log_all_ports
+    mission_control.log_all_ports
+
     # Start the components
     command_arbiter.start
     platform_driver.start
@@ -311,6 +316,17 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     command_joint_dispatcher.start
     locomotion_control.start
     ptu_control.start
+    
+    
+    joint_elements[17] = Types.base.JointState.Position(0.5236)
+
+    command = Types.base.commands.Joints.new(
+                time: Time.at(0),
+                names: joint_names,
+                elements: joint_elements)
+
+    writer.write(command)
+
     motion_translator.start
     joystick.start
     imu_stim300.start
@@ -328,15 +344,6 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     coupled_control.start
     waypoint_navigation.start
     path_planning.start
-
-    joint_elements[17] = Types.base.JointState.Position(0.5236)
-
-    command = Types.base.commands.Joints.new(
-                time: Time.at(0),
-                names: joint_names,
-                elements: joint_elements)
-
-    writer.write(command)
 
     gps.start
     gps_heading.start

@@ -287,7 +287,8 @@ roverBody_armBase_orientation: [0, 1.570796327, 0]
 # Vector with the length of each arm joint: [ (128.3 / 2) * pow(10, -3), (115 / 2) * pow(10, -3), (280 / 2) * pow(10, -3), (140 / 2) * pow(10, -3), (105 / 2) * pow(10, -3), (105 / 2) * pow(10, -3), (130 / 2) * pow(10, -3)]
 kinova_linksLength: [0.0642, 0.0575, 0.14, 0.07, 0.0525, 0.0525, 0.065]
 
-ExoTeR_linksLength: [0.0895, 0.206, 0.176, 0.0555]
+ExoTeR_linksLength: [0.0895, 0.206, 0.176, 0.1755]
+#ExoTeR_linksLength: [0.0895, 0.206, 0.176, 0.0555]
 
 # Vector with the X distance between the arm base and the rover centre
 x_distance_roverCentre_armBase: 0.165 
@@ -297,7 +298,7 @@ y_distance_roverCentre_armBase: -0.15
 
 # Initial sample position
 #initial_sample_position: [510, 512, 0]
-initial_sample_position: [85.0, 155.0, 0]
+initial_sample_position: [14.18, 146.76, 0]
 #initial_sample_position: [509.68, 509.17, 0]
 
 # Initial sample orientation
@@ -323,7 +324,7 @@ arm_base_aligned: false
 sample_mode: 2 
 
 # Variable that defines if we are receiving sample data using UDP communication (with respect to the camera, sample_mode: 2)
-udp_config: false
+udp_config: true 
 
 # Variable to choose which arm is being used. 
 # If arm_type = 0, the Kinova Lite 3 arm is being used.
