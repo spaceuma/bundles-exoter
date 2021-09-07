@@ -188,10 +188,14 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     mission_control.final_movement_port.connect_to                   coupled_control.kinova_final_movement_port
     mission_control.start_movement.connect_to                        coupled_control.start_movement
 
-    viso2_evaluation.odometry_in_world_pose.connect_to               waypoint_navigation.pose
-    viso2_evaluation.odometry_in_world_pose.connect_to               coupled_control.pose
-    viso2_evaluation.odometry_in_world_pose.connect_to               path_planning.pose
-    viso2_evaluation.odometry_in_world_pose.connect_to               mission_control.pose_input
+    #viso2_evaluation.odometry_in_world_pose.connect_to               waypoint_navigation.pose
+    #viso2_evaluation.odometry_in_world_pose.connect_to               coupled_control.pose
+    #viso2_evaluation.odometry_in_world_pose.connect_to               path_planning.pose
+    #viso2_evaluation.odometry_in_world_pose.connect_to               mission_control.pose_input
+    gps_heading.pose_samples_out.connect_to                          waypoint_navigation.pose
+    gps_heading.pose_samples_out.connect_to                          coupled_control.pose
+    gps_heading.pose_samples_out.connect_to                          path_planning.pose
+    gps_heading.pose_samples_out.connect_to                          mission_control.pose_input
 
 
     read_joint_dispatcher.arm_samples.connect_to                     mission_control.joints_position_port
@@ -310,12 +314,15 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     mission_control.log_all_ports
 
     # Start the components
+    sleep(1)
+    sleep(1)
     command_arbiter.start
     platform_driver.start
     read_joint_dispatcher.start
     command_joint_dispatcher.start
     locomotion_control.start
     ptu_control.start
+    
     
     joint_elements[17] = Types.base.JointState.Position(0.5236)
 
@@ -342,7 +349,6 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
 
     coupled_control.start
     waypoint_navigation.start
-    path_planning.start
 
     gps.start
     gps_heading.start
@@ -352,9 +358,10 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     end
     puts "GPS heading calibration done"
 
-    visual_odometry.start
-    viso2_with_imu.start
-    viso2_evaluation.start
+    path_planning.start
+    #visual_odometry.start
+    #viso2_with_imu.start
+    #viso2_evaluation.start
 
     logger_gps.start
     logger_imu.start

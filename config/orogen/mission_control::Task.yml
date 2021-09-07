@@ -227,10 +227,10 @@ is_vector_double: 0
 num_arm_joints: 5 
 
 # Number of gripper parts
-num_gripper: 2
+num_gripper: 0
 
 # Number of waypoints to perform last movement
-last_movement_waypoints: 5 
+last_movement_waypoints: 15 
 
 #Joints final position, elbow up:
 joints_final_position: [1, 1.5708, -2.21, 0, 0]
@@ -247,13 +247,13 @@ open_gripper_position: [-0.8, -0.8]
 final_gripper_position: [0.15, 0.15]
 
 #RoCK kinematic model, equal to the joints_final_position but with opposite numbers
-arm_model_initial_config: [-1.0, -1.5708, 2.21, 0, 0]
 
-#Vortex model
-arm_real_initial_config: [0,0,0,0,0]
+arm_model_initial_config: [1.570796,0,-2.21,0,0]
+
+arm_real_initial_config: [0,-1.570796,2.21,-1.570796,0]
 
 # Vector with the direction of each arm joint
-arm_joints_direction: [1,1,1,1,1]
+arm_joints_direction: [-1,-1,-1,1,1]
 
 # Value to define if there are negative angles (related with the arm joints directions)
 negative_angles: 1 
@@ -264,9 +264,11 @@ arm_ground_distance: 0.23
 # Distance between rover body and ground (the Vortex one is 0.279)
 body_ground_distance: 0.202
 
-navcam_armBase_position: [-0.107, 0.21, 0.699]
+#navcam_armBase_position: [-0.107, 0.21, 0.699]
+navcam_armBase_position: [-0.699, 0.21, -0.107]
 
-loccam_armBase_position: [0.03, 0.21, 0.202]
+#loccam_armBase_position: [0.03, 0.21, 0.202]
+loccam_armBase_position: [-0.202, 0.21, 0.03]
 
 navcam_armBase_orientation: [0, -1.0472, 0]
 
@@ -287,7 +289,9 @@ roverBody_armBase_orientation: [0, 1.570796327, 0]
 # Vector with the length of each arm joint: [ (128.3 / 2) * pow(10, -3), (115 / 2) * pow(10, -3), (280 / 2) * pow(10, -3), (140 / 2) * pow(10, -3), (105 / 2) * pow(10, -3), (105 / 2) * pow(10, -3), (130 / 2) * pow(10, -3)]
 kinova_linksLength: [0.0642, 0.0575, 0.14, 0.07, 0.0525, 0.0525, 0.065]
 
-ExoTeR_linksLength: [0.0895, 0.206, 0.176, 0.1755]
+#ExoTeR_linksLength: [0.0895, 0.206, 0.176, 0.20]
+ExoTeR_linksLength: [0.0895, 0.206, 0.176, 0.1955]
+#ExoTeR_linksLength: [0.0895, 0.206, 0.176, 0.2155]
 #ExoTeR_linksLength: [0.0895, 0.206, 0.176, 0.0555]
 
 # Vector with the X distance between the arm base and the rover centre
@@ -297,9 +301,9 @@ x_distance_roverCentre_armBase: 0.165
 y_distance_roverCentre_armBase: -0.15 
 
 # Initial sample position
-#initial_sample_position: [510, 512, 0]
-initial_sample_position: [14.18, 146.76, 0]
-#initial_sample_position: [509.68, 509.17, 0]
+#initial_sample_position: [14.23, 146.71, 0]
+initial_sample_position: [17.69, 151.3, 0]
+#initial_sample_position: [28.29, 144.42, 0]
 
 # Initial sample orientation
 initial_sample_orientation: [0, 0, 0]
@@ -330,3 +334,6 @@ udp_config: true
 # If arm_type = 0, the Kinova Lite 3 arm is being used.
 # If arm_type = 1, the ExoTeR is being used
 arm_type: 1
+
+# Variable to perform only the final fethcing operation
+firsthand_arm_movement: false
