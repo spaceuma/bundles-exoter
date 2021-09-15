@@ -307,15 +307,16 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     logger_viso2.log(viso2_evaluation.perc_error)
 
     path_planning.log_all_ports
+    platform_driver.log_all_ports
     mission_control.log_all_ports
 
     # Start the components
     command_arbiter.start
-    platform_driver.start
     read_joint_dispatcher.start
     command_joint_dispatcher.start
     locomotion_control.start
     ptu_control.start
+    platform_driver.start
     
     joint_elements[17] = Types.base.JointState.Position(0.5236)
 

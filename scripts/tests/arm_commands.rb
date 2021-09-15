@@ -27,17 +27,22 @@ Orocos::Process.run 'control' do
     joint_elements = Array.new(23, init_element)
 
     # Start
+    sleep(2)
+    platform_driver.log_all_ports
     platform_driver.start
 
     # CONVENTION: Positive speed = joint right-hand-rule rotation around the local z-axis,
     # where the local z-axis is pointing "into" the joint, i.e. looking back toward the joint
     # along the next kinematic link means we are looking at the positive end of the z-axis.
 
-    #joint_elements[18] = Types.base.JointState.Position(0)
+    joint_elements[18] = Types.base.JointState.Position(1)
     joint_elements[19] = Types.base.JointState.Position(1.5708)
- #   joint_elements[20] = Types.base.JointState.Position(1.3)
-  #  joint_elements[21] = Types.base.JointState.Position(-1.5708)
-   # joint_elements[22] = Types.base.JointState.Position(-1.5708)
+    joint_elements[20] = Types.base.JointState.Position(-2.21)
+    #joint_elements[18] = Types.base.JointState.Position(0)
+    #joint_elements[19] = Types.base.JointState.Position(0)
+    #joint_elements[20] = Types.base.JointState.Position(0)
+    joint_elements[21] = Types.base.JointState.Position(0)
+    joint_elements[22] = Types.base.JointState.Position(0)
     # initial config: 0 -1.5708 2.21 -1.5708 0
     # pos for vo: 1 1.5708 0 0 0
 

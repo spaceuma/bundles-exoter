@@ -94,7 +94,7 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','loccam',
     stereo_loccam.configure
 
     shutter_controller_loccam = TaskContext.get 'shutter_controller_bb2'
-    Orocos.conf.apply(shutter_controller_loccam, ['bb2malaga_lab'], :override => true)
+    Orocos.conf.apply(shutter_controller_loccam, ['bb2malaga'], :override => true)
     shutter_controller_loccam.configure
 
     puts "Connecting ports"
@@ -160,6 +160,7 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','loccam',
     logger_loccam.log(stereo_loccam.distance_frame)
 
     mission_control.log_all_ports
+    platform_driver.log_all_ports
 
     # Start the components
     sleep(1)
