@@ -302,7 +302,7 @@ y_distance_roverCentre_armBase: -0.15
 
 # Initial sample position
 #initial_sample_position: [14.23, 146.71, 0]
-initial_sample_position: [17.69, 151.3, 0]
+initial_sample_position: [17.23, 150.95, 0]
 #initial_sample_position: [28.29, 144.42, 0]
 
 # Initial sample orientation
