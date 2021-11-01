@@ -45,7 +45,7 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'navcam', 'loccam', 'un
     puts "Setting up path planning"
     path_planning = Orocos.name_service.get 'path_planning'
     path_planning.keep_old_waypoints = true
-    Orocos.conf.apply(path_planning, ['exoter_sfr_tests'], :override => true)
+    Orocos.conf.apply(path_planning, ['prl_sfr_tests'], :override => true)
     path_planning.configure
     puts "done"
 

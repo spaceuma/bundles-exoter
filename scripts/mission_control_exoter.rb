@@ -48,7 +48,7 @@ Orocos::Process.run 'navigation', 'autonomy', 'control', 'simulation','navcam', 
     puts "Setting up path planning"
     path_planning = Orocos.name_service.get 'path_planning'
     path_planning.keep_old_waypoints = true
-    Orocos.conf.apply(path_planning, ['small_exoter_rover'], :override => true)
+    Orocos.conf.apply(path_planning, ['malaga_sfr_tests'], :override => true)
     path_planning.configure
     puts "done"
 
