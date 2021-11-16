@@ -1,0 +1,151 @@
+--- name:default
+
+### Motion planner configuration ###
+# Timestamp when to reach the goal of the motion plan
+time_horizon: 160
+
+# Time resolution of the planner
+time_step: 1.006289308
+
+# Maximum number of iterations before considering failure
+max_iterations: 200
+
+# Threshold of the iteration control step to consider convergence
+control_threshold: 0.001
+
+# Linear searching step of the least-cost actuation each iteration
+line_search_step: 0.30
+
+# Shall the motion planner check for the distance to the goal to converge?
+check_distance: true
+
+# Shall the motion planner check for the orientation to the goal to converge?
+check_orientation: true
+
+# Shall the motion planner track a warmstarting base trajectory?
+track_reference_trajectory: true
+
+### Map configuration ###
+# Obstacles map resolution
+map_resolution: 0.05
+
+# Path to the obstacles map file
+obstacles_map_file: '../../../rover/data/maps/dummy_obstacles_map.txt'
+
+### Robot model configuration ###
+# Name of the robot model
+robot_model_name: 'exoter'
+
+--- name:exoter_ack
+
+### Motion planner configuration ###
+# Timestamp when to reach the goal of the motion plan
+time_horizon: 160
+
+# Time resolution of the planner
+time_step: 1.006289308
+
+# Maximum number of iterations before considering failure
+max_iterations: 200
+
+# Threshold of the iteration control step to consider convergence
+control_threshold: 0.05
+
+# Linear searching step of the least-cost actuation each iteration
+line_search_step: 0.32
+
+# Shall the motion planner check for the distance to the goal to converge?
+check_distance: true
+
+# Shall the motion planner check for the orientation to the goal to converge?
+check_orientation: true
+
+# Shall the motion planner track a warmstarting base trajectory?
+track_reference_trajectory: true
+
+### Map configuration ###
+# Obstacles map resolution
+map_resolution: 0.02
+
+# Path to the obstacles map file
+obstacles_map_file: '../../../rover/data/maps/prl/global_terrainMap_2cm.txt'
+
+### Robot model configuration ###
+# Name of the robot model
+robot_model_name: 'exoter_ack'
+
+--- name:exoter_ack_test
+
+### Motion planner configuration ###
+# Timestamp when to reach the goal of the motion plan
+time_horizon: 160
+
+# Time resolution of the planner
+time_step: 1.006289308
+
+# Maximum number of iterations before considering failure
+max_iterations: 200
+
+# Threshold of the iteration control step to consider convergence
+control_threshold: 0.05
+
+# Linear searching step of the least-cost actuation each iteration
+line_search_step: 0.32
+
+# Shall the motion planner check for the distance to the goal to converge?
+check_distance: true
+
+# Shall the motion planner check for the orientation to the goal to converge?
+check_orientation: true
+
+# Shall the motion planner track a warmstarting base trajectory?
+track_reference_trajectory: true
+
+### Map configuration ###
+# Obstacles map resolution
+map_resolution: 0.05
+
+# Path to the obstacles map file
+obstacles_map_file: '../../../rover/data/maps/dummy_obstacles_map.txt'
+
+### Robot model configuration ###
+# Name of the robot model
+robot_model_name: 'exoter_ack'
+
+--- name:exoter_diff
+
+### Motion planner configuration ###
+# Timestamp when to reach the goal of the motion plan
+time_horizon: 160
+
+# Time resolution of the planner
+time_step: 1.006289308
+
+# Maximum number of iterations before considering failure
+max_iterations: 100
+
+# Threshold of the iteration control step to consider convergence
+control_threshold: 0.05
+
+# Linear searching step of the least-cost actuation each iteration
+line_search_step: 0.32
+
+# Shall the motion planner check for the distance to the goal to converge?
+check_distance: true
+
+# Shall the motion planner check for the orientation to the goal to converge?
+check_orientation: true
+
+# Shall the motion planner track a warmstarting base trajectory?
+track_reference_trajectory: true
+
+### Map configuration ###
+# Obstacles map resolution
+map_resolution: 0.05
+
+# Path to the obstacles map file
+obstacles_map_file: '../../../rover/data/maps/dummy_obstacles_map.txt'
+
+### Robot model configuration ###
+# Name of the robot model
+robot_model_name: 'exoter'
