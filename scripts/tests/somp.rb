@@ -95,6 +95,10 @@ Orocos.run 'mpc_somp::Task' => 'mpc_somp' do
 
     pose_writer.write(pose)
 
+    while mpc_somp.state != :TARGET_REACHED
+        sleep 1
+    end
+
     Readline::readline("Press ENTER to send a new goal\n")
 
     goal.position[0] = 3.7
@@ -106,6 +110,10 @@ Orocos.run 'mpc_somp::Task' => 'mpc_somp' do
     goal.orientation.w = 0.6532799
 
     goal_writer.write(goal)
+
+    while mpc_somp.state != :TARGET_REACHED
+        sleep 1
+    end
 
     Readline::readline("Press ENTER to exit\n")
 end
