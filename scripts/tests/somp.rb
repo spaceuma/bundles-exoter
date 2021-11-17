@@ -68,6 +68,21 @@ Orocos.run 'mpc_somp::Task' => 'mpc_somp' do
 
     base_state_writer.write(motors_samples_reading)
 
+    # Dummy writing the input robot pose port
+    pose_writer = mpc_somp.robot_pose.writer
+    pose = Types.base.samples.RigidBodyState.new()
+
+    pose.position[0] = 1.5
+    pose.position[1] = 6.0
+    pose.orientation.x = 0
+    pose.orientation.y = 0
+    pose.orientation.z = 0.247404
+    pose.orientation.w = 0.9689124
+
+    pose_writer.write(pose)
+
+    Readline::readline("Press ENTER to send the first goal\n")
+
     # Dummy writing the input end effector goal port
     goal_writer = mpc_somp.goal_ee_pose.writer
     goal = Types.base.samples.RigidBodyState.new()
@@ -82,24 +97,11 @@ Orocos.run 'mpc_somp::Task' => 'mpc_somp' do
 
     goal_writer.write(goal)
 
-    # Dummy writing the input robot pose port
-    pose_writer = mpc_somp.robot_pose.writer
-    pose = Types.base.samples.RigidBodyState.new()
-
-    pose.position[0] = 1.5
-    pose.position[1] = 6.0
-    pose.orientation.x = 0
-    pose.orientation.y = 0
-    pose.orientation.z = 0.247404
-    pose.orientation.w = 0.9689124
-
-    pose_writer.write(pose)
-
     while mpc_somp.state != :TARGET_REACHED
         sleep 1
     end
 
-    Readline::readline("Press ENTER to send a new goal\n")
+    Readline::readline("Press ENTER to send a second goal\n")
 
     goal.position[0] = 3.7
     goal.position[1] = 6.0
