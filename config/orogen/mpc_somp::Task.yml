@@ -36,6 +36,22 @@ obstacles_map_file: '../../../rover/data/maps/dummy_obstacles_map.txt'
 # Name of the robot model
 robot_model_name: 'exoter'
 
+### Robot joints properties ###
+# Names of the manipulator joints
+arm_joints_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
+
+# Names of the left wheels driving joints
+left_driving_joints_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_CL', 'WHEEL_DRIVE_BL']
+
+# Names of the right wheels driving joints
+right_driving_joints_names: ['WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CR', 'WHEEL_DRIVE_BR']
+
+# Names of the left wheels steering joints
+left_steering_joints_names: ['WHEEL_STEER_FL', 'WHEEL_STEER_BL']
+
+# Names of the right wheels steering joints
+right_steering_joints_names: ['WHEEL_STEER_FR', 'WHEEL_STEER_BR']
+
 --- name:exoter_ack
 
 ### Motion planner configuration ###
@@ -73,6 +89,23 @@ obstacles_map_file: '../../../rover/data/maps/prl/global_terrainMap_2cm.txt'
 ### Robot model configuration ###
 # Name of the robot model
 robot_model_name: 'exoter_ack'
+
+### Robot joints properties ###
+# Names of the manipulator joints
+arm_joints_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
+
+# Names of the left wheels driving joints
+left_driving_joints_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_CL', 'WHEEL_DRIVE_BL']
+
+# Names of the right wheels driving joints
+right_driving_joints_names: ['WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CR', 'WHEEL_DRIVE_BR']
+
+# Names of the left wheels steering joints
+left_steering_joints_names: ['WHEEL_STEER_FL', 'WHEEL_STEER_BL']
+
+# Names of the right wheels steering joints
+right_steering_joints_names: ['WHEEL_STEER_FR', 'WHEEL_STEER_BR']
+
 
 --- name:exoter_ack_test
 
@@ -112,6 +145,23 @@ obstacles_map_file: '../../../rover/data/maps/dummy_obstacles_map.txt'
 # Name of the robot model
 robot_model_name: 'exoter_ack'
 
+### Robot joints properties ###
+# Names of the manipulator joints
+arm_joints_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
+
+# Names of the left wheels driving joints
+left_driving_joints_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_CL', 'WHEEL_DRIVE_BL']
+
+# Names of the right wheels driving joints
+right_driving_joints_names: ['WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CR', 'WHEEL_DRIVE_BR']
+
+# Names of the left wheels steering joints
+left_steering_joints_names: ['WHEEL_STEER_FL', 'WHEEL_STEER_BL']
+
+# Names of the right wheels steering joints
+right_steering_joints_names: ['WHEEL_STEER_FR', 'WHEEL_STEER_BR']
+
+
 --- name:exoter_diff
 
 ### Motion planner configuration ###
@@ -149,3 +199,20 @@ obstacles_map_file: '../../../rover/data/maps/dummy_obstacles_map.txt'
 ### Robot model configuration ###
 # Name of the robot model
 robot_model_name: 'exoter'
+
+### Robot joints properties ###
+# Names of the manipulator joints
+arm_joints_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
+
+# Names of the left wheels driving joints
+left_driving_joints_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_CL', 'WHEEL_DRIVE_BL']
+
+# Names of the right wheels driving joints
+right_driving_joints_names: ['WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CR', 'WHEEL_DRIVE_BR']
+
+# Names of the left wheels steering joints
+left_steering_joints_names: ['WHEEL_STEER_FL', 'WHEEL_STEER_BL']
+
+# Names of the right wheels steering joints
+right_steering_joints_names: ['WHEEL_STEER_FR', 'WHEEL_STEER_BR']
+
