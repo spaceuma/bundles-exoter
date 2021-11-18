@@ -1,6 +1,9 @@
 --- name:default
 
+####################################
 ### Motion planner configuration ###
+####################################
+
 # Timestamp when to reach the goal of the motion plan
 time_horizon: 160
 
@@ -25,18 +28,27 @@ check_orientation: true
 # Shall the motion planner track a warmstarting base trajectory?
 track_reference_trajectory: true
 
+#########################
 ### Map configuration ###
+#########################
+
 # Obstacles map resolution
 map_resolution: 0.05
 
 # Path to the obstacles map file
 obstacles_map_file: '../../../rover/data/maps/dummy_obstacles_map.txt'
 
+#################################
 ### Robot model configuration ###
+#################################
+
 # Name of the robot model
 robot_model_name: 'exoter'
 
+#######################################
 ### Robot reading joints properties ###
+#######################################
+
 # Names of the manipulator joints
 arm_joints_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
 
@@ -52,16 +64,35 @@ left_steering_joints_names: ['WHEEL_STEER_FL', 'WHEEL_STEER_BL']
 # Names of the right wheels steering joints
 right_steering_joints_names: ['WHEEL_STEER_FR', 'WHEEL_STEER_BR']
 
+##########################################
 ### Robot commanding joints properties ###
+##########################################
+
 # Names of the robot arm joints commands
 arm_commands_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
 
 # Names of the robot base joints commands
 base_commands_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CL', 'WHEEL_DRIVE_CR', 'WHEEL_DRIVE_BL', 'WHEEL_DRIVE_BR', 'WHEEL_STEER_FL', 'WHEEL_STEER_FR', 'WHEEL_STEER_BL', 'WHEEL_STEER_BR', 'WHEEL_WALK_FL', 'WHEEL_WALK_FR', 'WHEEL_WALK_CL', 'WHEEL_WALK_CR', 'WHEEL_WALK_BL', 'WHEEL_WALK_BR', 'WHEEL_DRIVE_GROUP', 'WHEEL_STEER_GROUP', 'WHEEL_WALK_GROUP']
 
+########################################
+### Manipulator modelling properties ###
+########################################
+
+# Zero position of the manipulator joints DKM w.r.t. the real zero
+arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 0]
+
+# Positive movement direction of the model joints w.r.t. the real ones
+arm_model_positive_direction: [-1, -1, -1, 1, 1]
+
+
+
+
 --- name:exoter_ack
 
+####################################
 ### Motion planner configuration ###
+####################################
+
 # Timestamp when to reach the goal of the motion plan
 time_horizon: 160
 
@@ -86,18 +117,27 @@ check_orientation: true
 # Shall the motion planner track a warmstarting base trajectory?
 track_reference_trajectory: true
 
+#########################
 ### Map configuration ###
+#########################
+
 # Obstacles map resolution
 map_resolution: 0.02
 
 # Path to the obstacles map file
 obstacles_map_file: '../../../rover/data/maps/prl/global_terrainMap_2cm.txt'
 
+#################################
 ### Robot model configuration ###
+#################################
+
 # Name of the robot model
 robot_model_name: 'exoter_ack'
 
+#######################################
 ### Robot reading joints properties ###
+#######################################
+
 # Names of the manipulator joints
 arm_joints_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
 
@@ -113,16 +153,36 @@ left_steering_joints_names: ['WHEEL_STEER_FL', 'WHEEL_STEER_BL']
 # Names of the right wheels steering joints
 right_steering_joints_names: ['WHEEL_STEER_FR', 'WHEEL_STEER_BR']
 
+##########################################
 ### Robot commanding joints properties ###
+##########################################
+
 # Names of the robot arm joints commands
 arm_commands_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
 
 # Names of the robot base joints commands
 base_commands_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CL', 'WHEEL_DRIVE_CR', 'WHEEL_DRIVE_BL', 'WHEEL_DRIVE_BR', 'WHEEL_STEER_FL', 'WHEEL_STEER_FR', 'WHEEL_STEER_BL', 'WHEEL_STEER_BR', 'WHEEL_WALK_FL', 'WHEEL_WALK_FR', 'WHEEL_WALK_CL', 'WHEEL_WALK_CR', 'WHEEL_WALK_BL', 'WHEEL_WALK_BR', 'WHEEL_DRIVE_GROUP', 'WHEEL_STEER_GROUP', 'WHEEL_WALK_GROUP']
 
+########################################
+### Manipulator modelling properties ###
+########################################
+
+# Zero position of the manipulator joints DKM w.r.t. the real zero
+arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 0]
+
+# Positive movement direction of the model joints w.r.t. the real ones
+arm_model_positive_direction: [-1, -1, -1, 1, 1]
+
+
+
+
+
 --- name:exoter_ack_test
 
+####################################
 ### Motion planner configuration ###
+####################################
+
 # Timestamp when to reach the goal of the motion plan
 time_horizon: 160
 
@@ -147,18 +207,27 @@ check_orientation: true
 # Shall the motion planner track a warmstarting base trajectory?
 track_reference_trajectory: true
 
+#########################
 ### Map configuration ###
+#########################
+
 # Obstacles map resolution
 map_resolution: 0.05
 
 # Path to the obstacles map file
 obstacles_map_file: '../../../rover/data/maps/dummy_obstacles_map.txt'
 
+#################################
 ### Robot model configuration ###
+#################################
+
 # Name of the robot model
 robot_model_name: 'exoter_ack'
 
+#######################################
 ### Robot reading joints properties ###
+#######################################
+
 # Names of the manipulator joints
 arm_joints_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
 
@@ -174,16 +243,35 @@ left_steering_joints_names: ['WHEEL_STEER_FL', 'WHEEL_STEER_BL']
 # Names of the right wheels steering joints
 right_steering_joints_names: ['WHEEL_STEER_FR', 'WHEEL_STEER_BR']
 
+##########################################
 ### Robot commanding joints properties ###
+##########################################
+
 # Names of the robot arm joints commands
 arm_commands_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
 
 # Names of the robot base joints commands
 base_commands_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CL', 'WHEEL_DRIVE_CR', 'WHEEL_DRIVE_BL', 'WHEEL_DRIVE_BR', 'WHEEL_STEER_FL', 'WHEEL_STEER_FR', 'WHEEL_STEER_BL', 'WHEEL_STEER_BR', 'WHEEL_WALK_FL', 'WHEEL_WALK_FR', 'WHEEL_WALK_CL', 'WHEEL_WALK_CR', 'WHEEL_WALK_BL', 'WHEEL_WALK_BR', 'WHEEL_DRIVE_GROUP', 'WHEEL_STEER_GROUP', 'WHEEL_WALK_GROUP']
 
+########################################
+### Manipulator modelling properties ###
+########################################
+
+# Zero position of the manipulator joints DKM w.r.t. the real zero
+arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 0]
+
+# Positive movement direction of the model joints w.r.t. the real ones
+arm_model_positive_direction: [-1, -1, -1, 1, 1]
+
+
+
+
 --- name:exoter_diff
 
+####################################
 ### Motion planner configuration ###
+####################################
+
 # Timestamp when to reach the goal of the motion plan
 time_horizon: 160
 
@@ -208,18 +296,27 @@ check_orientation: true
 # Shall the motion planner track a warmstarting base trajectory?
 track_reference_trajectory: true
 
+#########################
 ### Map configuration ###
+#########################
+
 # Obstacles map resolution
 map_resolution: 0.05
 
 # Path to the obstacles map file
 obstacles_map_file: '../../../rover/data/maps/dummy_obstacles_map.txt'
 
+#################################
 ### Robot model configuration ###
+#################################
+
 # Name of the robot model
 robot_model_name: 'exoter'
 
+#######################################
 ### Robot reading joints properties ###
+#######################################
+
 # Names of the manipulator joints
 arm_joints_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
 
@@ -235,9 +332,23 @@ left_steering_joints_names: ['WHEEL_STEER_FL', 'WHEEL_STEER_BL']
 # Names of the right wheels steering joints
 right_steering_joints_names: ['WHEEL_STEER_FR', 'WHEEL_STEER_BR']
 
+##########################################
 ### Robot commanding joints properties ###
+##########################################
+
 # Names of the robot arm joints commands
 arm_commands_names: ['ARM_JOINT_1', 'ARM_JOINT_2', 'ARM_JOINT_3', 'ARM_JOINT_4', 'ARM_JOINT_5']
 
 # Names of the robot base joints commands
 base_commands_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CL', 'WHEEL_DRIVE_CR', 'WHEEL_DRIVE_BL', 'WHEEL_DRIVE_BR', 'WHEEL_STEER_FL', 'WHEEL_STEER_FR', 'WHEEL_STEER_BL', 'WHEEL_STEER_BR', 'WHEEL_WALK_FL', 'WHEEL_WALK_FR', 'WHEEL_WALK_CL', 'WHEEL_WALK_CR', 'WHEEL_WALK_BL', 'WHEEL_WALK_BR', 'WHEEL_DRIVE_GROUP', 'WHEEL_STEER_GROUP', 'WHEEL_WALK_GROUP']
+
+########################################
+### Manipulator modelling properties ###
+########################################
+
+# Zero position of the manipulator joints DKM w.r.t. the real zero
+arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 0]
+
+# Positive movement direction of the model joints w.r.t. the real ones
+arm_model_positive_direction: [-1, -1, -1, 1, 1]
+

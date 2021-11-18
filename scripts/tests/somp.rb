@@ -35,10 +35,10 @@ Orocos.run 'mpc_somp::Task' => 'mpc_somp' do
 
     arm_joint_elements = Array.new(5, init_element)
 
-    arm_joint_elements[0] = Types.base.JointState.Position(0.5708)
-    arm_joint_elements[1] = Types.base.JointState.Position(-3.14159265)
-    arm_joint_elements[2] = Types.base.JointState.Position(2.21)
-    arm_joint_elements[3] = Types.base.JointState.Position(1.5708)
+    arm_joint_elements[0] = Types.base.JointState.Position(1.0)
+    arm_joint_elements[1] = Types.base.JointState.Position(1.5708)
+    arm_joint_elements[2] = Types.base.JointState.Position(-2.21)
+    arm_joint_elements[3] = Types.base.JointState.Position(0.0)
     arm_joint_elements[4] = Types.base.JointState.Position(0.0)
 
     arm_joint_elements[0].speed = 0
@@ -112,6 +112,10 @@ Orocos.run 'mpc_somp::Task' => 'mpc_somp' do
     goal.orientation.w = 0.6532799
 
     goal_writer.write(goal)
+
+    while mpc_somp.state != :CONTROLLING
+        sleep 1
+    end
 
     while mpc_somp.state != :TARGET_REACHED
         sleep 1
