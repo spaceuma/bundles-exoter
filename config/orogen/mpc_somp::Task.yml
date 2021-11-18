@@ -79,7 +79,7 @@ base_commands_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CL', 'WHE
 ########################################
 
 # Zero position of the manipulator joints DKM w.r.t. the real zero
-arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 0]
+arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 1.5707963267948966192]
 
 # Positive movement direction of the model joints w.r.t. the real ones
 arm_model_positive_direction: [-1, -1, -1, 1, 1]
@@ -168,7 +168,7 @@ base_commands_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CL', 'WHE
 ########################################
 
 # Zero position of the manipulator joints DKM w.r.t. the real zero
-arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 0]
+arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 1.5707963267948966192]
 
 # Positive movement direction of the model joints w.r.t. the real ones
 arm_model_positive_direction: [-1, -1, -1, 1, 1]
@@ -258,7 +258,7 @@ base_commands_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CL', 'WHE
 ########################################
 
 # Zero position of the manipulator joints DKM w.r.t. the real zero
-arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 0]
+arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 1.5707963267948966192]
 
 # Positive movement direction of the model joints w.r.t. the real ones
 arm_model_positive_direction: [-1, -1, -1, 1, 1]
@@ -347,7 +347,7 @@ base_commands_names: ['WHEEL_DRIVE_FL', 'WHEEL_DRIVE_FR', 'WHEEL_DRIVE_CL', 'WHE
 ########################################
 
 # Zero position of the manipulator joints DKM w.r.t. the real zero
-arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 0]
+arm_model_zero_position: [1.5707963267948966192, -1.5707963267948966192, 0, 1.5707963267948966192, 1.5707963267948966192]
 
 # Positive movement direction of the model joints w.r.t. the real ones
 arm_model_positive_direction: [-1, -1, -1, 1, 1]
