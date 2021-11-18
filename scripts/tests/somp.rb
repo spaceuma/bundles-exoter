@@ -113,7 +113,7 @@ Orocos.run 'mpc_somp::Task' => 'mpc_somp' do
 
     goal_writer.write(goal)
 
-    while mpc_somp.state != :CONTROLLING
+    while mpc_somp.state != :FOLLOWING
         sleep 1
     end
 
