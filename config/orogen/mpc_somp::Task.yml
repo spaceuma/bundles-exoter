@@ -28,6 +28,16 @@ check_orientation: true
 # Shall the motion planner track a warmstarting base trajectory?
 track_reference_trajectory: true
 
+##############################################
+### Model predictive control configuration ###
+##############################################
+
+# Admisible distance error (m) to the trajectory before replanning
+threshold_distance_error: 0.10
+
+# Admisible error in the position of a joint (rad) before replanning
+threshold_position_error: 0.05
+
 #########################
 ### Map configuration ###
 #########################
@@ -116,6 +126,16 @@ check_orientation: true
 
 # Shall the motion planner track a warmstarting base trajectory?
 track_reference_trajectory: true
+
+##############################################
+### Model predictive control configuration ###
+##############################################
+
+# Admisible distance error (m) to the trajectory before replanning
+threshold_distance_error: 0.10
+
+# Admisible error in the position of a joint (rad) before replanning
+threshold_position_error: 0.05
 
 #########################
 ### Map configuration ###
@@ -207,6 +227,16 @@ check_orientation: true
 # Shall the motion planner track a warmstarting base trajectory?
 track_reference_trajectory: true
 
+##############################################
+### Model predictive control configuration ###
+##############################################
+
+# Admisible distance error (m) to the trajectory before replanning
+threshold_distance_error: 0.10
+
+# Admisible error in the position of a joint (rad) before replanning
+threshold_position_error: 0.05
+
 #########################
 ### Map configuration ###
 #########################
@@ -295,6 +325,16 @@ check_orientation: true
 
 # Shall the motion planner track a warmstarting base trajectory?
 track_reference_trajectory: true
+
+##############################################
+### Model predictive control configuration ###
+##############################################
+
+# Admisible distance error (m) to the trajectory before replanning
+threshold_distance_error: 0.10
+
+# Admisible error in the position of a joint (rad) before replanning
+threshold_position_error: 0.05
 
 #########################
 ### Map configuration ###
