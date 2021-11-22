@@ -33,10 +33,10 @@ track_reference_trajectory: true
 ##############################################
 
 # Admisible distance error (m) to the trajectory before replanning
-threshold_distance_error: 0.10
+threshold_distance_error: 0.05
 
 # Admisible error in the position of a joint (rad) before replanning
-threshold_position_error: 0.05
+threshold_position_error: 0.035
 
 #########################
 ### Map configuration ###
@@ -132,10 +132,10 @@ track_reference_trajectory: true
 ##############################################
 
 # Admisible distance error (m) to the trajectory before replanning
-threshold_distance_error: 0.10
+threshold_distance_error: 0.05
 
 # Admisible error in the position of a joint (rad) before replanning
-threshold_position_error: 0.05
+threshold_position_error: 0.035
 
 #########################
 ### Map configuration ###
