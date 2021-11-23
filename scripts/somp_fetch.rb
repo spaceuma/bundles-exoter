@@ -12,13 +12,22 @@ Bundles.initialize
 ## Transformation for the transformer
 Bundles.transformer.load_conf(Bundles.find_file('config', 'transforms_scripts_exoter.rb'))
 
-Orocos.run 'control', 'navcam', 'loccam', 'unit_visual_odometry', 'imu', 'unit_bb2', 'shutter_controller', 'mpc_somp::Task' => 'mpc_somp', 'vicon::Task' => 'vicon' do
+Orocos.run 'control', 'navcam', 'loccam', 'unit_visual_odometry', 'imu', 'unit_bb2', 'shutter_controller', 'mpc_somp::Task' => 'mpc_somp', 'vicon::Task' => 'vicon', 'mission_control::Task' => 'mission_control' do
 
     # Setup mpc_somp
     puts "Setting up mpc_somp"
     mpc_somp = Orocos.name_service.get 'mpc_somp'
     Orocos.conf.apply(mpc_somp, ['exoter_ack'], :override => true)
     mpc_somp.configure
+    puts "done"
+    
+    # setup mission_control
+    puts "Setting up mission control"
+    mission_control = Orocos.name_service.get 'mission_control'
+    Orocos.conf.apply(mission_control, ['exoter_rover'], :override => true)
+    mission_control.firsthand_arm_movement = true
+    mission_control.somp_integrated = true
+    mission_control.configure
     puts "done"
 
     # Setup read joint_dispatcher
@@ -125,14 +134,20 @@ Orocos.run 'control', 'navcam', 'loccam', 'unit_visual_odometry', 'imu', 'unit_b
     puts "Connecting ports"
 
     vicon.pose_samples.connect_to                         mpc_somp.robot_pose
+    vicon.pose_samples.connect_to                         mission_control.pose_input
     #viso2_evaluation.odometry_in_world_pose.connect_to    mpc_somp.robot_pose
     read_joint_dispatcher.arm_samples.connect_to          mpc_somp.arm_joints
+    read_joint_dispatcher.arm_samples.connect_to          mission_control.joints_position_port
     read_joint_dispatcher.motors_samples.connect_to       mpc_somp.base_joints
 
     read_joint_dispatcher.ptu_samples.connect_to          ptu_control.ptu_samples
 
     mpc_somp.arm_joints_command.connect_to                command_joint_dispatcher.arm_commands
     mpc_somp.base_joints_command.connect_to               command_joint_dispatcher.joints_commands
+
+    mpc_somp.control_state.connect_to                     mission_control.somp_state
+    mission_control.sample_world_pose.connect_to          mpc_somp.goal_ee_pose
+
     ptu_control.ptu_commands_out.connect_to               command_joint_dispatcher.ptu_commands
 
     platform_driver.joints_readings.connect_to            read_joint_dispatcher.joints_readings
@@ -171,9 +186,6 @@ Orocos.run 'control', 'navcam', 'loccam', 'unit_visual_odometry', 'imu', 'unit_b
     viso2_evaluation.log_all_ports
 
     # Start
-    vicon.start
-    mpc_somp.start
-
     platform_driver.start
     command_joint_dispatcher.start
     read_joint_dispatcher.start
@@ -189,10 +201,15 @@ Orocos.run 'control', 'navcam', 'loccam', 'unit_visual_odometry', 'imu', 'unit_b
     stereo_navcam.start
     shutter_controller_navcam.start
 
+    vicon.start
     imu_stim300.start
     visual_odometry.start
     viso2_with_imu.start
     viso2_evaluation.start
+
+    mpc_somp.start
+
+    mission_control.start
 
     # Send 30 degrees to NavCam PTU
     writer = platform_driver.joints_commands.writer
@@ -230,21 +247,21 @@ Orocos.run 'control', 'navcam', 'loccam', 'unit_visual_odometry', 'imu', 'unit_b
     #pose_writer.write(pose)
 
     # Starting the script
-    Readline::readline("Press ENTER to send the goal\n")
+    #Readline::readline("Press ENTER to send the goal\n")
 
     # Dummy writing the input end effector goal port
-    goal_writer = mpc_somp.goal_ee_pose.writer
-    goal = Types.base.samples.RigidBodyState.new()
+    #goal_writer = mpc_somp.goal_ee_pose.writer
+    #goal = Types.base.samples.RigidBodyState.new()
 
-    goal.position[0] = 4.0
-    goal.position[1] = 5.7
-    goal.position[2] = 0.1
-    goal.orientation.x = 0.0
-    goal.orientation.y = 0.0
-    goal.orientation.z = 0.3801884
-    goal.orientation.w = 0.9249091
+    #goal.position[0] = 4.0
+    #goal.position[1] = 5.7
+    #goal.position[2] = 0.1
+    #goal.orientation.x = 0.0
+    #goal.orientation.y = 0.0
+    #goal.orientation.z = 0.3801884
+    #goal.orientation.w = 0.9249091
 
-    goal_writer.write(goal)
+    #goal_writer.write(goal)
 
     #while mpc_somp.state != :FOLLOWING
     #    sleep 1
