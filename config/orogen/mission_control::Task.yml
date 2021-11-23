@@ -337,3 +337,6 @@ arm_type: 1
 
 # Variable to perform only the final fethcing operation
 firsthand_arm_movement: false
+
+# Variable to integrate mission control and somp
+somp_integrated: false
