@@ -186,11 +186,6 @@ Orocos.run 'control', 'navcam', 'loccam', 'unit_visual_odometry', 'imu', 'unit_b
     viso2_evaluation.log_all_ports
 
     # Start
-    platform_driver.start
-    command_joint_dispatcher.start
-    read_joint_dispatcher.start
-    ptu_control.start
-
     camera_loccam.start
     camera_firewire_loccam.start
     stereo_loccam.start
@@ -200,6 +195,11 @@ Orocos.run 'control', 'navcam', 'loccam', 'unit_visual_odometry', 'imu', 'unit_b
     camera_firewire_navcam.start
     stereo_navcam.start
     shutter_controller_navcam.start
+
+    platform_driver.start
+    command_joint_dispatcher.start
+    read_joint_dispatcher.start
+    ptu_control.start
 
     vicon.start
     imu_stim300.start

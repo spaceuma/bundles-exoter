@@ -35,8 +35,14 @@ track_reference_trajectory: true
 # Admisible distance error (m) to the trajectory before replanning
 threshold_distance_error: 0.05
 
-# Admisible orientation error (rad) to the goal pose before replanning
-threshold_orientation_error: 0.5
+# Time horizon (s) in which to start checking the goal pose error
+threshold_time_goal_pose: 80
+
+# Admisible distance error (m) of the goal pose before replanning
+threshold_goal_distance_error: 0.01
+
+# Admisible orientation error (rad) of the goal pose before replanning
+threshold_goal_orientation_error: 0.5
 
 # Admisible error in the position of a joint (rad) before replanning
 threshold_position_error: 0.05
@@ -110,7 +116,7 @@ arm_model_positive_direction: [-1, -1, -1, 1, 1]
 time_horizon: 160
 
 # Time resolution of the planner
-time_step: 1.006289308
+time_step: 0.8
 
 # Maximum number of iterations before considering failure
 max_iterations: 200
@@ -135,13 +141,19 @@ track_reference_trajectory: true
 ##############################################
 
 # Admisible distance error (m) to the trajectory before replanning
-threshold_distance_error: 0.05
+threshold_distance_error: 0.04
 
-# Admisible orientation error (rad) to the goal pose before replanning
-threshold_orientation_error: 0.5
+# Time horizon (s) in which to start checking the goal pose error
+threshold_time_goal_pose: 120
+
+# Admisible distance error (m) of the goal pose before replanning
+threshold_goal_distance_error: 0.01
+
+# Admisible orientation error (rad) of the goal pose before replanning
+threshold_goal_orientation_error: 0.5
 
 # Admisible error in the position of a joint (rad) before replanning
-threshold_position_error: 0.05
+threshold_position_error: 0.02
 
 #########################
 ### Map configuration ###
@@ -240,8 +252,14 @@ track_reference_trajectory: true
 # Admisible distance error (m) to the trajectory before replanning
 threshold_distance_error: 0.10
 
-# Admisible orientation error (rad) to the goal pose before replanning
-threshold_orientation_error: 0.5
+# Time horizon (s) in which to start checking the goal pose error
+threshold_time_goal_pose: 80
+
+# Admisible distance error (m) of the goal pose before replanning
+threshold_goal_distance_error: 0.01
+
+# Admisible orientation error (rad) of the goal pose before replanning
+threshold_goal_orientation_error: 0.5
 
 # Admisible error in the position of a joint (rad) before replanning
 threshold_position_error: 0.05
@@ -342,8 +360,14 @@ track_reference_trajectory: true
 # Admisible distance error (m) to the trajectory before replanning
 threshold_distance_error: 0.10
 
-# Admisible orientation error (rad) to the goal pose before replanning
-threshold_orientation_error: 0.5
+# Time horizon (s) in which to start checking the goal pose error
+threshold_time_goal_pose: 80
+
+# Admisible distance error (m) of the goal pose before replanning
+threshold_goal_distance_error: 0.01
+
+# Admisible orientation error (rad) of the goal pose before replanning
+threshold_goal_orientation_error: 0.5
 
 # Admisible error in the position of a joint (rad) before replanning
 threshold_position_error: 0.05
