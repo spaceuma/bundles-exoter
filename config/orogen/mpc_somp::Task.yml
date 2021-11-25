@@ -144,10 +144,10 @@ track_reference_trajectory: true
 threshold_distance_error: 0.04
 
 # Time horizon (s) in which to start checking the goal pose error
-threshold_time_goal_pose: 120
+threshold_time_goal_pose: 100
 
 # Admisible distance error (m) of the goal pose before replanning
-threshold_goal_distance_error: 0.01
+threshold_goal_distance_error: 0.03
 
 # Admisible orientation error (rad) of the goal pose before replanning
 threshold_goal_orientation_error: 0.5
