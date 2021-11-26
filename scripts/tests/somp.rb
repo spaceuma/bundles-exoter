@@ -72,54 +72,27 @@ Orocos.run 'mpc_somp::Task' => 'mpc_somp' do
     pose_writer = mpc_somp.robot_pose.writer
     pose = Types.base.samples.RigidBodyState.new()
 
-    pose.position[0] = 1.5
-    pose.position[1] = 6.0
-    pose.orientation.x = 0
-    pose.orientation.y = 0
-    pose.orientation.z = 0.247404
-    pose.orientation.w = 0.9689124
+    pose.position[0] = 5.0
+    pose.position[1] = 6.4
+    pose.orientation.x = 0.0
+    pose.orientation.y = 0.0
+    pose.orientation.z = -0.7068252
+    pose.orientation.w = 0.7073883
 
     pose_writer.write(pose)
 
-    Readline::readline("Press ENTER to send the first goal\n")
-
     # Dummy writing the input end effector goal port
     goal_writer = mpc_somp.goal_ee_pose.writer
-    goal = Types.base.samples.RigidBodyState.new()
+    goal = goal_writer.new_sample
 
-    goal.position[0] = 3.5
-    goal.position[1] = 6.0
-    goal.position[2] = 0.1
-    goal.orientation.x = 0.2706019
-    goal.orientation.y = 0.6532799
-    goal.orientation.z = 0.2706019
-    goal.orientation.w = 0.6532799
-
-    goal_writer.write(goal)
-
-    while mpc_somp.state != :TARGET_REACHED
-        sleep 1
-    end
-
-    Readline::readline("Press ENTER to send a second goal\n")
-
-    goal.position[0] = 3.7
-    goal.position[1] = 6.0
-    goal.position[2] = 0.1
-    goal.orientation.x = 0.2706019
-    goal.orientation.y = 0.6532799
-    goal.orientation.z = 0.2706019
-    goal.orientation.w = 0.6532799
+    goal.push(4.7)
+    goal.push(5.22)
+    goal.push(0.1)
+    goal.push(0.0)
+    goal.push(1.5708)
+    goal.push(0.78)
 
     goal_writer.write(goal)
-
-    while mpc_somp.state != :FOLLOWING
-        sleep 1
-    end
-
-    while mpc_somp.state != :TARGET_REACHED
-        sleep 1
-    end
 
     Readline::readline("Press ENTER to exit\n")
 end
