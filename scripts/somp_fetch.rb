@@ -115,9 +115,10 @@ Orocos::Process.run 'control', 'loccam', 'unit_visual_odometry', 'imu', 'unit_bb
     # Ports connection
     puts "Connecting ports"
 
-    vicon.pose_samples.connect_to                         mpc_somp.robot_pose
-    vicon.pose_samples.connect_to                         mission_control.pose_input
-    #viso2_evaluation.odometry_in_world_pose.connect_to    mpc_somp.robot_pose
+    #vicon.pose_samples.connect_to                         mpc_somp.robot_pose
+    #vicon.pose_samples.connect_to                         mission_control.pose_input
+    viso2_evaluation.odometry_in_world_pose.connect_to    mpc_somp.robot_pose
+    viso2_evaluation.odometry_in_world_pose.connect_to    mission_control.pose_input
     read_joint_dispatcher.arm_samples.connect_to          mpc_somp.arm_joints
     read_joint_dispatcher.arm_samples.connect_to          mission_control.joints_position_port
     read_joint_dispatcher.arm_samples.connect_to          coupled_control.current_config
@@ -159,11 +160,18 @@ Orocos::Process.run 'control', 'loccam', 'unit_visual_odometry', 'imu', 'unit_bb
     coupled_control.manipulator_command.connect_to        command_joint_dispatcher.arm_commands
 
     # Logging
+    Orocos.log_all_configuration
+
     mpc_somp.log_all_ports
     mission_control.log_all_ports
     read_joint_dispatcher.log_all_ports
     vicon.log_all_ports
     viso2_evaluation.log_all_ports
+
+    logger_loccam = Orocos.name_service.get 'loccam_Logger'
+    logger_loccam.file = "loccam.log"
+    logger_loccam.log(camera_loccam.left_frame)
+    logger_loccam.log(camera_loccam.right_frame)
 
     # Start
     camera_loccam.start

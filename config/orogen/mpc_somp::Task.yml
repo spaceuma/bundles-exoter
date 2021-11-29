@@ -150,10 +150,10 @@ threshold_time_goal_pose: 100
 threshold_goal_distance_error: 0.03
 
 # Admisible orientation error (rad) of the goal pose before replanning
-threshold_goal_orientation_error: 0.5
+threshold_goal_orientation_error: 0.3
 
 # Admisible error in the position of a joint (rad) before replanning
-threshold_position_error: 0.02
+threshold_position_error: 0.04
 
 #########################
 ### Map configuration ###
